@@ -1,0 +1,7 @@
+name,category,duration_hours,price,lat,lon,description
+City Museum,museum,2,15,41.881,-87.623,"A contemporary city museum"
+Botanical Garden,nature,3,12,41.793,-87.607,"Large garden with seasonal exhibits"
+Historic District,tour,2,0,41.888,-87.626,"Walking tour of the old town"
+Fine Dining,food,2.5,75,41.882,-87.620,"Upscale local cuisine"
+Local Brewery,food,1.5,25,41.886,-87.617,"Brewery tour & tasting"
+River Walk,nature,1,0,41.890,-87.622,"Scenic walk along the river"
