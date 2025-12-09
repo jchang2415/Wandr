@@ -1,0 +1,31 @@
+name,category,duration_hours,price,lat,lon,description
+Eiffel Tower,landmark,2.5,28,48.8584,2.2945,Iconic iron tower with stunning city views from multiple levels
+Louvre Museum,museum,4,17,48.8606,2.3376,World's largest art museum featuring the Mona Lisa and thousands of masterpieces
+Notre-Dame Cathedral,landmark,1,0,48.8530,2.3499,Gothic masterpiece on Île de la Cité (exterior viewing during restoration)
+Arc de Triomphe,landmark,1.5,13,48.8738,2.2950,Monumental arch honoring fallen soldiers with rooftop views of Champs-Élysées
+Sacré-Cœur Basilica,landmark,1.5,0,48.8867,2.3431,White-domed basilica atop Montmartre with panoramic city views
+Luxembourg Gardens,nature,2,0,48.8462,2.3371,Beautiful 17th-century gardens perfect for strolling and relaxing
+Musée d'Orsay,museum,3,16,48.8600,2.3266,Impressionist art museum in a stunning former railway station
+Seine River Cruise,tour,1.5,15,48.8566,2.3522,Scenic boat tour passing major landmarks along the Seine
+Le Marais Walking Tour,tour,2.5,0,48.8566,2.3522,Historic district with medieval architecture and trendy boutiques
+Palace of Versailles,landmark,5,20,48.8049,2.1204,Opulent royal palace with Hall of Mirrors and expansive gardens
+Montmartre Food Tour,food,3,85,48.8867,2.3431,Guided culinary walking tour featuring French specialties and wine
+Traditional French Bistro,food,2,45,48.8566,2.3522,Classic bistro experience with authentic French cuisine
+Café de Flore,food,1.5,25,48.8542,2.3327,Historic Left Bank café favored by intellectuals and artists
+Champs-Élysées Shopping,shopping,3,50,48.8698,2.3078,Famous avenue lined with luxury boutiques and flagship stores
+Le Bon Marché,shopping,2.5,40,48.8511,2.3243,Historic Left Bank department store with gourmet food hall
+Père Lachaise Cemetery,nature,2,0,48.8611,2.3936,Famous cemetery with graves of Oscar Wilde Jim Morrison and Edith Piaf
+Rodin Museum,museum,2,13,48.8553,2.3159,Intimate museum showcasing sculptures in beautiful gardens
+Sainte-Chapelle,landmark,1,13,48.8553,2.3450,13th-century Gothic chapel with breathtaking stained glass windows
+Latin Quarter Stroll,nature,1.5,0,48.8503,2.3437,Historic student quarter with bookshops cafés and narrow streets
+Seine Dinner Cruise,food,3,95,48.8566,2.3522,Evening dinner cruise with city illuminations and gourmet meal
+Moulin Rouge Show,entertainment,2.5,120,48.8841,2.3324,Iconic cabaret performance with elaborate costumes and choreography
+Opéra Garnier Tour,tour,1.5,14,48.8720,2.3319,Ornate 19th-century opera house with grand staircase and chandelier
+Tuileries Garden,nature,1.5,0,48.8634,2.3275,Historic formal garden between Louvre and Place de la Concorde
+Picnic at Buttes-Chaumont,nature,2,15,48.8799,2.3829,Local park with lake temple and cliffs popular with Parisians
+French Cooking Class,food,4,95,48.8566,2.3522,Hands-on workshop learning to prepare traditional French dishes
+Panthéon,landmark,1.5,11.50,48.8462,2.3464,Neoclassical mausoleum housing tombs of French luminaries
+Musée de l'Orangerie,museum,1.5,12.50,48.8638,2.3227,Museum featuring Monet's Water Lilies in oval rooms
+Centre Pompidou,museum,2.5,15,48.8606,2.3522,Modern art museum with colorful exterior pipes and rooftop views
+Marché aux Puces,shopping,3,10,48.9017,2.3444,Massive flea market with antiques vintage items and collectibles
+Jazz Club Evening,entertainment,2.5,30,48.8566,2.3522,Intimate jazz club experience in historic Saint-Germain district
