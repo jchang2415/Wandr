@@ -3,7 +3,7 @@
 from dataclasses import dataclass, field
 from datetime import date
 from typing import List
-from .itinerary import DayPlan
+from .dayplan import DayPlan
 
 @dataclass
 class Trip:
@@ -43,4 +43,5 @@ class Trip:
             "budget": self.budget,
             "interests": self.interests,
             "itinerary": [d.to_dict() for d in self.itinerary]
+
         }
