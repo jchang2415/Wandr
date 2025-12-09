@@ -41,10 +41,11 @@ class Activity:
         return {
             "name": self.name,
             "category": self.category,
-            "duration_hours": self.duration_hours,
+            "duration_hours": self.duration,
             "price": self.price,
             "location": self.location,
             "description": self.description,
         }
+
 
 
