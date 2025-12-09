@@ -1,0 +1,31 @@
+name,category,duration_hours,price,lat,lon,description
+Senso-ji Temple,landmark,1.5,0,35.7148,139.7967,Tokyo's oldest Buddhist temple with iconic Thunder Gate and bustling market street
+Meiji Shrine,landmark,1.5,0,35.6764,139.6993,Peaceful Shinto shrine surrounded by forest in the heart of the city
+Tokyo Skytree,landmark,2,18,35.7101,139.8107,World's tallest tower with observation decks offering panoramic views
+Shibuya Crossing,landmark,0.5,0,35.6595,139.7004,Famous scramble crossing and vibrant shopping district
+Tsukiji Outer Market,food,2,25,35.6654,139.7707,Bustling market with fresh seafood street food and culinary delights
+Tokyo National Museum,museum,3,7,35.7188,139.7768,Japan's oldest museum featuring samurai armor art and archaeological treasures
+teamLab Borderless,museum,2.5,24,35.6246,139.7755,Immersive digital art museum with interactive light installations
+Harajuku Takeshita Street,shopping,2,20,35.6702,139.7036,Teen fashion mecca with quirky boutiques and colorful street style
+Shinjuku Gyoen Garden,nature,2,2.50,35.6852,139.7100,Expansive garden blending Japanese French and English landscape styles
+Akihabara Electronics,shopping,3,30,35.7022,139.7745,Electric town famous for anime manga and electronic goods
+Ramen Tasting Tour,food,2.5,45,35.6812,139.7671,Guided tour sampling different regional ramen styles
+Sumo Wrestling Match,entertainment,3,60,35.6973,139.7933,Traditional sumo tournament at Ryogoku Kokugikan arena
+Odaiba Seaside Park,nature,2,0,35.6301,139.7753,Waterfront park with beach views of Rainbow Bridge and Tokyo skyline
+Imperial Palace Gardens,nature,1.5,0,35.6852,139.7528,Beautiful public gardens surrounding the Imperial Palace
+Sushi Making Class,food,3,80,35.6812,139.7671,Hands-on class learning to prepare authentic nigiri and rolls
+Asakusa Rickshaw Tour,tour,1.5,50,35.7148,139.7967,Traditional rickshaw ride through historic Asakusa district
+Ueno Park and Zoo,nature,3,6,35.7153,139.7739,Large park with museums zoo and cherry blossoms in spring
+Karaoke Box,entertainment,2,25,35.6895,139.6917,Private karaoke room experience with song library and drinks
+Tokyo DisneySea,entertainment,8,75,35.6263,139.8836,Unique Disney theme park with nautical and adventure themes
+Ginza Shopping District,shopping,3,50,35.6717,139.7650,Upscale shopping area with luxury brands and department stores
+Robot Restaurant Show,entertainment,2,70,35.6959,139.7046,Over-the-top dinner show with robots lasers and performers
+Kappabashi Kitchen Town,shopping,2,15,35.7116,139.7873,Street lined with shops selling kitchenware ceramics and plastic food samples
+Mount Takao Hike,nature,5,3,35.6250,139.2443,Easy mountain hike near Tokyo with temple and scenic views
+Yakitori Alley Dinner,food,2,35,35.6959,139.7046,Tiny izakaya restaurants serving grilled chicken skewers
+Ghibli Museum,museum,2.5,10,35.6961,139.5704,Whimsical museum dedicated to Studio Ghibli animation films
+Tokyo Tower,landmark,1.5,12,35.6586,139.7454,Iconic red tower with observation decks and city views
+Roppongi Art Triangle,museum,3,15,35.6627,139.7290,Three major art museums within walking distance
+Nakamise Shopping Street,shopping,1,10,35.7116,139.7966,Traditional shopping street leading to Senso-ji Temple
+Sumida River Cruise,tour,1,10,35.7101,139.8107,Scenic boat ride along the river passing landmarks and bridges
+Izakaya Food Experience,food,2.5,40,35.6895,139.6917,Traditional Japanese pub experience with small plates and drinks
