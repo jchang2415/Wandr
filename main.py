@@ -117,7 +117,7 @@ def display_itinerary(user_inputs, itinerary):
     # Display itinerary
     print("\n--- Itinerary ---")
     if itinerary:
-        for day, activities in itinerary.items():
+        for day, activities in enumerate(itinerary, start=1):
             print(f"\nDay {day}:")
             for activity in activities:
                 print(f"  - {activity['name']} ({activity['category']}) - ${activity['cost']:.2f}")
