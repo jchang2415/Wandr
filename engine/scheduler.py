@@ -5,8 +5,8 @@ from typing import List
 from models.activity import Activity
 from models.trip import Trip
 from models.preferences import UserPreferences
-from models.itinerary import DayPlan
-from planner.scorer import score_activity
+from models.dayplan import DayPlan
+from .scorer import score_activity
 
 def create_itinerary(
     trip: Trip,
@@ -61,3 +61,4 @@ def create_itinerary(
         current_date += timedelta(days=1)
 
     return itinerary
+
