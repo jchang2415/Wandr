@@ -117,10 +117,13 @@ def display_itinerary(user_inputs, itinerary):
     # Display itinerary
     print("\n--- Itinerary ---")
     if itinerary:
-        for day, activities in enumerate(itinerary, start=1):
-            print(f"\nDay {day}:")
-            for activity in activities:
-                print(f"  - {activity['name']} ({activity['category']}) - ${activity['cost']:.2f}")
+        for i, day in enumerate(itinerary, 1):
+            print(f"\nDAY {i} - {day.date}\n")
+            print("-" * 40 + "\n")
+            for activity in day.activities:
+                print(f"  - {activity.name} ({activity.duration}h, ${activity.price})\n")
+                if activity.description:
+                    print(f"    {activity.description}\n")
     else:
         print("No activities found for the selected criteria.")
 
@@ -190,7 +193,7 @@ def main():
                     f.write(f"\nDAY {i} - {day.date}\n")
                     f.write("-" * 40 + "\n")
                     for activity in day.activities:
-                        f.write(f"  - {activity.name} ({activity.duration_hours}h, ${activity.price})\n")
+                        f.write(f"  - {activity.name} ({activity.duration}h, ${activity.price})\n")
                         if activity.description:
                             f.write(f"    {activity.description}\n")
             
