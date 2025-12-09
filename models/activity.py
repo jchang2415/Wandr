@@ -6,7 +6,7 @@ Define
 
 from dataclasses import dataclass
 
-@dataclass
+@dataclass(frozen=True)
 class Activity:
     '''
     This defines a class called "Activity" to store our things to do in our app. 
@@ -46,6 +46,7 @@ class Activity:
             "location": self.location,
             "description": self.description,
         }
+
 
 
 
