@@ -49,16 +49,17 @@ def create_itinerary(
             #     continue
 
             # Check time limit
-            if activity.duration_hours <= hours_left:
+            if activity.duration <= hours_left:
 
                 # Add activity
                 day.add_activity(activity)
                 used.add(activity)
-                hours_left -= activity.duration_hours
+                hours_left -= activity.duration
                 remaining_budget -= activity.price
 
         itinerary.append(day)
         current_date += timedelta(days=1)
 
     return itinerary
+
 
