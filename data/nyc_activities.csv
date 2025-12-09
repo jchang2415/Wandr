@@ -1,0 +1,31 @@
+name,category,duration_hours,price,lat,lon,description
+Statue of Liberty & Ellis Island,landmark,4,24,40.6892,-74.0445,Iconic statue and immigration museum accessible by ferry
+Central Park Stroll,nature,2,0,40.7829,-73.9654,Expansive urban park with lakes bridges and meadows
+Metropolitan Museum of Art,museum,4,30,40.7794,-73.9632,World-renowned art museum spanning 5000 years of culture
+Empire State Building,landmark,2,44,40.7484,-73.9857,Art Deco skyscraper with observation decks on 86th and 102nd floors
+9/11 Memorial & Museum,museum,2.5,33,40.7115,-74.0134,Powerful tribute to September 11th attacks with reflecting pools
+Brooklyn Bridge Walk,nature,1.5,0,40.7061,-73.9969,Historic suspension bridge with pedestrian walkway and city views
+Times Square,landmark,1,0,40.7580,-73.9855,Bustling intersection known for bright lights and Broadway theaters
+High Line Park,nature,1.5,0,40.7480,-74.0048,Elevated park built on historic freight rail line
+MoMA Museum,museum,3,25,40.7614,-73.9776,Museum of Modern Art featuring contemporary masterpieces
+Broadway Show,entertainment,2.5,150,40.7590,-73.9845,World-class theater performance in the Theater District
+Food Tour in Chelsea Market,food,2.5,75,40.7423,-74.0048,Culinary tour through historic market hall with diverse vendors
+Fifth Avenue Shopping,shopping,3,50,40.7589,-73.9787,Iconic shopping street with flagship stores and luxury brands
+One World Observatory,landmark,1.5,44,40.7127,-74.0134,Observation deck atop tallest building in Western Hemisphere
+Yankee Stadium Tour,tour,1.5,30,40.8296,-73.9262,Behind-the-scenes tour of legendary baseball stadium
+American Museum Natural History,museum,3,28,40.7813,-73.9740,Massive museum with dinosaur fossils planetarium and cultural exhibits
+Rockefeller Center & Top of Rock,landmark,2,40,40.7587,-73.9787,Art Deco complex with observation deck and seasonal ice rink
+Greenwich Village Walking Tour,tour,2,0,40.7336,-74.0027,Historic bohemian neighborhood with jazz clubs and Washington Square Park
+Guggenheim Museum,museum,2,25,40.7830,-73.9590,Modern art museum in Frank Lloyd Wright's spiral building
+Coney Island Beach,nature,4,10,40.5755,-73.9707,Historic beach boardwalk and amusement park by the ocean
+Chelsea Art Galleries,museum,2,0,40.7472,-74.0061,Contemporary art gallery district with rotating exhibitions
+Pizza Tour,food,2.5,60,40.7223,-73.9879,Guided tour sampling New York's best pizza slices
+SoHo Shopping,shopping,2.5,40,40.7233,-74.0030,Trendy neighborhood with cast-iron buildings and boutiques
+Brooklyn Brewery Tour,food,1.5,20,40.7211,-73.9576,Craft brewery tour with tastings and rooftop views
+Intrepid Sea Air & Space Museum,museum,2.5,36,40.7646,-73.9997,Aircraft carrier museum with space shuttle and fighter jets
+Staten Island Ferry,tour,1,0,40.6433,-74.0738,Free ferry ride with views of Statue of Liberty and skyline
+Jazz Club in Harlem,entertainment,2.5,35,40.8116,-73.9465,Authentic jazz performance in historic Harlem venue
+The Vessel at Hudson Yards,landmark,1,0,40.7536,-74.0019,Interactive honeycomb structure with climbing staircases
+Roosevelt Island Tram,tour,0.5,2.90,40.7614,-73.9509,Aerial tramway with East River and Manhattan views
+Smorgasburg Food Market,food,2,25,40.7214,-73.9577,Outdoor food market with dozens of local vendors
+Little Italy & Chinatown Tour,tour,2,0,40.7189,-73.9973,Walking tour through historic immigrant neighborhoods
