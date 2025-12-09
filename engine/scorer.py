@@ -31,16 +31,16 @@ def score_activity(activity: Activity, prefs: UserPreferences) -> float:
 
     # 3. Scheduler type preferences
     if prefs.schedule_type == "relaxed":
-        if activity.duration_hours <= 2:
+        if activity.duration <= 2:
             score += 10
     elif prefs.schedule_type == "packed":
-        if activity.duration_hours >= 2:
+        if activity.duration >= 2:
             score += 10
     else:
         # balanced mode: no adjustments
         pass
 
     # 4. A small boost for shorter activities (more flexible)
-    score += max(0, 5 - activity.duration_hours)
+    score += max(0, 5 - activity.duration)
 
     return score
