@@ -22,8 +22,8 @@ class Activity:
     # Define "duration" attribute; in HOURS
     duration: float
 
-    # Define "cost" attribute; in USD
-    cost: float
+    # Define "price" attribute; in USD
+    price: float
 
     # Define "location" attribute; in (latitude, longitude) aka GPS coordinates
     location: tuple[float, float]
@@ -46,6 +46,7 @@ class Activity:
             "location": self.location,
             "description": self.description,
         }
+
 
 
 
