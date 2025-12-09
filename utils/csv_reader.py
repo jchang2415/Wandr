@@ -83,7 +83,7 @@ def load_activities_from_csv(path: str | Path) -> List[Activity]:
             activity = Activity(
                 name=name,
                 category=category,
-                duration_hours=duration,
+                duration=duration,
                 price=price,
                 location=location,
                 description=description
@@ -93,4 +93,5 @@ def load_activities_from_csv(path: str | Path) -> List[Activity]:
             activities.append(activity)
 
     # Return the parsed list of all activities in the input file
+
     return activities
