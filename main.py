@@ -23,6 +23,13 @@ except ImportError:
     API_AVAILABLE = False
     print("⚠️  API not available. Install: pip install requests python-dotenv")
 
+try:
+    from api.amadeus_api import AmadeusFlightAPI, search_trip_flights
+    FLIGHT_API_AVAILABLE = True
+except ImportError:
+    FLIGHT_API_AVAILABLE = False
+    print("⚠️  Amadeus Flight API not available.")
+
 # Import GUI
 try:
     from gui.gui import WandrGUI, main as gui_main
