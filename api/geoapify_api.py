@@ -8,6 +8,7 @@ Free tier: 3,000 requests/day, no credit card required
 '''
 
 import requests
+from requests.structures import CaseInsensitiveDict
 import os
 from dotenv import load_dotenv
 from models.activity import Activity
@@ -41,9 +42,10 @@ class GeoapifyAPI:
         if not self.api_key:
             raise ValueError("Geoapify API key not found. Set GEOAPIFY_API_KEY in .env file")
         
-        # Set base_url attribute
-        self.base_url = "https://api.geoapify.com/v2"
-    
+        # Set base url attributes
+        self.places_url = "https://api.geoapify.com/v2"
+        self.geocode_url = "https://api.geoapify.com/v1"
+        
     def geocode_city(self, city_name):
         '''
         Method to get coordinates and details for a city.
@@ -58,7 +60,7 @@ class GeoapifyAPI:
             Dictionary with city details including coordinates or None
         '''
         # Set URL
-        url = f"{self.base_url}/geocode/search"
+        url = f"{self.geocode_url}/geocode/search"
         
         # Set search parameters using inputs
         params = {
@@ -137,7 +139,7 @@ class GeoapifyAPI:
         lat, lon = city_info['lat'], city_info['lon']
         
         # Build search URL
-        url = f"{self.base_url}/places"
+        url = f"{self.places_url}/places"
         
         # Set default categories if none are provided
         if not categories:
@@ -186,7 +188,7 @@ class GeoapifyAPI:
             Detailed place dictionary or None
         '''
         # Set URL
-        url = f"{self.base_url}/place-details"
+        url = f"{self.places_url}/place-details"
 
         # Set up parameters for search
         params = {
@@ -537,3 +539,4 @@ if __name__ == "__main__":
     print("\nCategory distribution:")
     for cat, count in categories.items():
         print(f"  {cat}: {count}")
+
