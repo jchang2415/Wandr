@@ -551,7 +551,7 @@ class WandrGUI:
                 for j, activity in enumerate(day.activities, 1):
                     self.results_text.insert(tk.END, f"\n{j}. {activity.name}\n", "activity")
                     self.results_text.insert(tk.END, 
-                        f"   {activity.category} | {activity.duration_hours}h | ${activity.price}\n",
+                        f"   {activity.category} | {activity.duration}h | ${activity.price}\n",
                         "detail")
                     if activity.description:
                         desc = activity.description[:100] + "..." if len(activity.description) > 100 else activity.description
