@@ -85,17 +85,17 @@ def score_activity(activity, prefs, already_schedule = None):
     
     # 3. SCHEDULE TYPE FIT (0-15 points)
     if prefs.schedule_type == "relaxed":
-        if activity.duration_hours <= 2:
+        if activity.duration <= 2:
             score += 15
-        elif activity.duration_hours >= 4:
+        elif activity.duration >= 4:
             score -= 10  # Penalize long activities
     elif prefs.schedule_type == "packed":
-        if activity.duration_hours >= 2:
+        if activity.duration >= 2:
             score += 10
     
     # Otherwise if schedule type is balanced
     else:  
-        if 1.5 <= activity.duration_hours <= 3:
+        if 1.5 <= activity.duration <= 3:
             score += 10
     
     # 4. VARIETY BONUS/PENALTY (-20 to +10 points)
@@ -128,11 +128,11 @@ def score_activity(activity, prefs, already_schedule = None):
     
     # 5. DURATION FLEXIBILITY (0-8 points)
     # Boost shorter activities as they are more flexible for scheduling
-    if activity.duration_hours <= 1:
+    if activity.duration <= 1:
         score += 8
-    elif activity.duration_hours <= 2:
+    elif activity.duration <= 2:
         score += 5
-    elif activity.duration_hours <= 3:
+    elif activity.duration <= 3:
         score += 2
     # No bonus or penalty for activities over 3 hours
     
