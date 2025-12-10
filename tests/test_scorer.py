@@ -2,7 +2,7 @@
 
 from models.activity import Activity
 from models.preferences import UserPreferences
-from planner.scorer import score_activity
+from engine.scorer import score_activity
 
 def test_interest_boost():
     '''
@@ -59,4 +59,5 @@ def test_schedule_type_effect():
 
     # Check that activities that match preferences are scored higher
     assert score_activity(short, relaxed) > score_activity(long, relaxed)
+
     assert score_activity(long, packed) > score_activity(short, packed)
