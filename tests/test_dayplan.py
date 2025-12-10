@@ -1,7 +1,7 @@
 # Unit Testing for DayPlan 
 
 from datetime import date
-from models.itinerary import DayPlan
+from models.dayplan import DayPlan
 from models.activity import Activity
 
 def test_dayplan_initialization():
@@ -41,4 +41,5 @@ def test_dayplan_total_hours():
     day.add_activity(Activity("Park", "nature", 1.0, 0.0))
 
     # Check output of total_hours() method is as expected
+
     assert day.total_hours() == 3.0
