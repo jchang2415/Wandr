@@ -34,6 +34,7 @@ def test_preferences_defaults():
     assert prefs.max_hours_per_day == 8.0
     assert prefs.prioritize_cost is False
     assert prefs.prioritize_distance is False
+    assert prefs.include_opening_hours is False
 
 
 def test_preferences_with_custom_hours():
@@ -189,10 +190,12 @@ def test_preferences_with_all_flags_enabled():
         schedule_type="balanced",
         prioritize_cost=True,
         prioritize_distance=True,
+        include_opening_hours=True
     )
 
     assert prefs.prioritize_cost is True
     assert prefs.prioritize_distance is True
+    assert prefs.include_opening_hours is True
 
 
 def test_preferences_fractional_hours():
@@ -290,3 +293,4 @@ def test_preferences_case_sensitive_interests():
     assert "Museum" in prefs.interests
     assert "FOOD" in prefs.interests
     assert "nature" in prefs.interests
+
