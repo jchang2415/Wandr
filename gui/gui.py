@@ -9,13 +9,19 @@ from datetime import date, datetime, timedelta
 from typing import List, Optional
 import threading
 
-# Import your existing modules
+# Import modules
 from models.activity import Activity
 from models.preferences import UserPreferences
 from models.trip import Trip
 from engine.scheduler import create_itinerary
 from api.geoapify_api import fetch_activities_for_city, get_comprehensive_activities
 
+# Import flight API
+try:
+    from api.amadeus_api import AmadeusFlightAPI, search_trip_flights
+    FLIGHT_API_AVAILABLE = True
+except ImportError:
+    FLIGHT_API_AVAILABLE = False
 
 class WandrGUI:
     '''
