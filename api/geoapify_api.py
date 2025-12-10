@@ -256,14 +256,14 @@ class GeoapifyAPI:
                         description = f"Located at {address}"
                 
                 # Estimate duration and price
-                duration_hours = self._estimate_duration(categories, category)
+                duration = self._estimate_duration(categories, category)
                 price = self._estimate_price(categories, category, properties)
                 
                 # Create Activity object using parsed information
                 activity = Activity(
                     name=name,
                     category=category,
-                    duration_hours=duration_hours,
+                    duration=duration,
                     price=price,
                     location=location,
                     description=description
@@ -523,7 +523,7 @@ if __name__ == "__main__":
     for i, act in enumerate(activities[:5], 1):
         print(f"\n{i}. {act.name}")
         print(f"   Category: {act.category}")
-        print(f"   Duration: {act.duration_hours}h")
+        print(f"   Duration: {act.duration}h")
         print(f"   Price: ${act.price}")
         if act.location:
             print(f"   Location: {act.location}")
@@ -539,4 +539,5 @@ if __name__ == "__main__":
     print("\nCategory distribution:")
     for cat, count in categories.items():
         print(f"  {cat}: {count}")
+
 
