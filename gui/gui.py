@@ -41,6 +41,7 @@ class WandrGUI:
         self.trip: Optional[Trip] = None
         self.preferences: Optional[UserPreferences] = None
         self.itinerary = []
+        self.flight_info = None
         
         # Create UI
         self.create_widgets()
@@ -110,6 +111,52 @@ class WandrGUI:
         # Content
         content = scrollable_frame
         padding = 20
+        
+        # Flight Search Section
+        if FLIGHT_API_AVAILABLE:
+            self.create_section_header(content, "✈️ Flight Search (Optional)", padding)
+            
+            flight_frame = tk.Frame(content, bg=self.bg_color)
+            flight_frame.pack(pady=5, padx=padding, fill=tk.X)
+            
+            self.search_flights_var = tk.BooleanVar()
+            tk.Checkbutton(
+                flight_frame,
+                text="Include flight search",
+                variable=self.search_flights_var,
+                bg=self.bg_color,
+                font=("Arial", 10),
+                activebackground=self.bg_color,
+                command=self.toggle_flight_fields
+            ).pack(anchor=tk.W, pady=5)
+            
+            self.origin_frame = tk.Frame(flight_frame, bg=self.bg_color)
+            self.origin_frame.pack(fill=tk.X, pady=5)
+            
+            tk.Label(
+                self.origin_frame,
+                text="Departure City:",
+                bg=self.bg_color,
+                font=("Arial", 10)
+            ).pack(side=tk.LEFT)
+            
+            self.origin_var = tk.StringVar()
+            self.origin_entry = tk.Entry(
+                self.origin_frame,
+                textvariable=self.origin_var,
+                font=("Arial", 10),
+                width=20,
+                state=tk.DISABLED
+            )
+            self.origin_entry.pack(side=tk.LEFT, padx=10)
+            
+            tk.Label(
+                self.origin_frame,
+                text="(e.g., New York, Paris)",
+                bg=self.bg_color,
+                font=("Arial", 8),
+                fg=self.secondary_color
+            ).pack(side=tk.LEFT)
         
         # Destination
         self.create_section_header(content, "📍 Destination", padding)
@@ -231,6 +278,16 @@ class WandrGUI:
             cursor="hand2"
         )
         self.generate_btn.pack()
+
+    
+    def toggle_flight_fields(self):
+        """Enable/disable flight search fields based on checkbox."""
+        if self.search_flights_var.get():
+            self.origin_entry.config(state=tk.NORMAL)
+        else:
+            self.origin_entry.config(state=tk.DISABLED)
+            self.origin_var.set("")
+            
     
     def create_results_tab(self):
         '''Create the results display tab.'''
@@ -282,6 +339,7 @@ class WandrGUI:
         self.results_text.tag_config("day_header", font=("Arial", 13, "bold"), foreground=self.accent_color)
         self.results_text.tag_config("activity", font=("Arial", 11))
         self.results_text.tag_config("detail", font=("Arial", 9), foreground=self.secondary_color)
+        self.results_text.tag_config("flight", font=("Arial", 11, "bold"), foreground="#e67e22")
     
     def create_section_header(self, parent, text, padding):
         '''
@@ -349,6 +407,12 @@ class WandrGUI:
         if not any(var.get() for var in self.interest_vars.values()):
             messagebox.showerror("Error", "Please select at least one interest.")
             return False
+
+        # Check origin if flight search enabled
+        if FLIGHT_API_AVAILABLE and self.search_flights_var.get():
+            if not self.origin_var.get().strip():
+                messagebox.showerror("Error", "Please enter departure city for flight search.")
+                return False
         
         return True
     
@@ -383,6 +447,17 @@ class WandrGUI:
             schedule_type = self.schedule_var.get()
             prioritize_cost = self.prioritize_cost_var.get()
             prioritize_distance = self.prioritize_distance_var.get()
+
+            # Search for flights if enabled
+            self.flight_info = None
+            if FLIGHT_API_AVAILABLE and self.search_flights_var.get():
+                origin = self.origin_var.get().strip()
+                self.root.after(0, lambda: self.update_status(f"Searching for flights from {origin}..."))
+                
+                try:
+                    self.flight_info = search_trip_flights(origin, destination, start_date, end_date)
+                except Exception as e:
+                    print(f"Flight search error: {e}")
             
             # Fetch activities from API
             self.root.after(0, lambda: self.update_status(f"Fetching activities for {destination}..."))
@@ -439,6 +514,19 @@ class WandrGUI:
         self.results_text.insert(tk.END, f"📅 Dates: {self.trip.start_date} to {self.trip.end_date}\n")
         self.results_text.insert(tk.END, f"💰 Budget: ${self.trip.budget}\n")
         self.results_text.insert(tk.END, f"🗓️  Trip Length: {self.trip.trip_length()} days\n")
+        
+        # Display flight info if available
+        if self.flight_info:
+            self.results_text.insert(tk.END, "\n" + "="*70 + "\n", "header")
+            self.results_text.insert(tk.END, "✈️  FLIGHT INFORMATION\n", "flight")
+            self.results_text.insert(tk.END, "="*70 + "\n")
+            self.results_text.insert(tk.END, f"Route: {self.flight_info['origin']} → {self.flight_info['destination']}\n", "detail")
+            self.results_text.insert(tk.END, f"Price: ${self.flight_info['total_price']:.2f} {self.flight_info['currency']}\n", "detail")
+            self.results_text.insert(tk.END, f"Departure: {self.flight_info['departure_date']} at {self.flight_info.get('departure_time', '')[:5]}\n", "detail")
+            self.results_text.insert(tk.END, f"Duration: {self.flight_info['duration']}\n", "detail")
+            self.results_text.insert(tk.END, f"Stops: {self.flight_info['stops']}\n", "detail")
+            self.results_text.insert(tk.END, f"Airline: {self.flight_info['airline']}\n", "detail")
+        
         self.results_text.insert(tk.END, "=" * 70 + "\n\n")
         
         # Itinerary by day
@@ -467,7 +555,14 @@ class WandrGUI:
         
         # Summary
         self.results_text.insert(tk.END, "=" * 70 + "\n", "header")
-        self.results_text.insert(tk.END, f"\nTOTAL TRIP COST: ${total_cost:.2f} / ${self.trip.budget:.2f}\n", "header")
+
+        if self.flight_info:
+            flight_cost = self.flight_info['total_price']
+            self.results_text.insert(tk.END, f"\nACTIVITIES COST: ${total_cost:.2f}\n", "activity")
+            self.results_text.insert(tk.END, f"FLIGHTS COST: ${flight_cost:.2f}\n", "flight")
+            self.results_text.insert(tk.END, f"TOTAL TRIP COST: ${total_cost + flight_cost:.2f}\n", "header")
+        else:
+            self.results_text.insert(tk.END, f"\nTOTAL ACTIVITIES COST: ${total_cost:.2f} / ${self.trip.budget:.2f}\n", "header")
         
         if total_cost <= self.trip.budget:
             remaining = self.trip.budget - total_cost
