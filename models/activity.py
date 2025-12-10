@@ -26,10 +26,10 @@ class Activity:
     price: float
 
     # Define "location" attribute; in (latitude, longitude) aka GPS coordinates
-    location: tuple[float, float]
+    location: tuple[float, float] = None
 
     # Define "description" attribute to describe the activity
-    description: str
+    description: str = ""
 
     # Define method for converting Activity class objects to dictionaries
     def to_dict(self):
@@ -46,6 +46,7 @@ class Activity:
             "location": self.location,
             "description": self.description,
         }
+
 
 
 
