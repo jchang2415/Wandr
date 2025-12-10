@@ -10,7 +10,7 @@ def test_activity_initialization():
     a = Activity(
         name="Museum",
         category="museum",
-        duration_hours=2.0,
+        duration=2.0,
         price=20.0,
         location=(41.0, -87.0),
         description="A great museum."
@@ -18,7 +18,7 @@ def test_activity_initialization():
 
     assert a.name == "Museum"
     assert a.category == "museum"
-    assert a.duration_hours == 2.0
+    assert a.duration == 2.0
     assert a.price == 20.0
     assert a.location == (41.0, -87.0)
     assert a.description == "A great museum."
@@ -41,7 +41,7 @@ def test_activity_to_dict():
     a = Activity(
         name="Museum",
         category="museum",
-        duration_hours=2.5,
+        duration=2.5,
         price=20.0,
         location=(41.0, -87.0),
         description="A great museum."
@@ -51,7 +51,7 @@ def test_activity_to_dict():
     
     assert result["name"] == "Museum"
     assert result["category"] == "museum"
-    assert result["duration_hours"] == 2.5
+    assert result["duration"] == 2.5
     assert result["price"] == 20.0
     assert result["location"] == (41.0, -87.0)
     assert result["description"] == "A great museum."
@@ -104,7 +104,7 @@ def test_activity_with_fractional_duration():
     '''
     a = Activity("Quick Tour", "tour", 0.5, 10.0)
     
-    assert a.duration_hours == 0.5
+    assert a.duration == 0.5
 
 
 def test_activity_category_case_sensitivity():
@@ -124,3 +124,4 @@ def test_activity_with_coordinates():
     
     assert a.location[0] == 48.8584  # Latitude
     assert a.location[1] == 2.2945   # Longitude
+
