@@ -62,10 +62,10 @@ def create_itinerary(trip, activities, prefs, locked_activities = None):
         # First add any locked activities for the day
         for locked_act in locked_activities:
             if locked_act not in used:
-                if locked_act.duration_hours <= hours_left:
+                if locked_act.duration <= hours_left:
                     day.add_activity(locked_act)
                     used.add(locked_act)
-                    hours_left -= locked_act.duration_hours
+                    hours_left -= locked_act.duration
                     remaining_budget -= locked_act.price
                     break 
         
@@ -80,11 +80,11 @@ def create_itinerary(trip, activities, prefs, locked_activities = None):
 
             last_location = None
             for score, activity in scored_activities:
-                if activity not in used and activity.duration_hours <= hours_left:
+                if activity not in used and activity.duration <= hours_left:
                     if remaining_budget - activity.price >= 0:
                         day.add_activity(activity)
                         used.add(activity)
-                        hours_left -= activity.duration_hours
+                        hours_left -= activity.duration
                         remaining_budget -= activity.price
                         last_location = activity.location
                         break
@@ -99,7 +99,7 @@ def create_itinerary(trip, activities, prefs, locked_activities = None):
                     continue
                 
                 # Check constraints
-                if activity.duration_hours > hours_left:
+                if activity.duration > hours_left:
                     continue
                 if remaining_budget - activity.price < 0:
                     continue
@@ -124,7 +124,7 @@ def create_itinerary(trip, activities, prefs, locked_activities = None):
             if best_nearby:
                 day.add_activity(best_nearby)
                 used.add(best_nearby)
-                hours_left -= best_nearby.duration_hours
+                hours_left -= best_nearby.duration
                 remaining_budget -= best_nearby.price
                 last_location = best_nearby.location
             else:
@@ -220,5 +220,6 @@ def estimate_travel_time(activity1, activity2, speed_kmh = 5.0):
     
     # Add 15 min buffer for navigation/waiting & return travel_time value
     return travel_time + 0.25  
+
 
 
