@@ -140,7 +140,7 @@ def create_itinerary_with_clustering(trip, activities, prefs, locked_activities 
     return itinerary
 
 
-def get_activity_clusters(activities, max_distance_km = 2.0) -> List[List[Activity]]:
+def get_activity_clusters(activities, max_distance_km = 2.0):
     '''
     Group activities into geographic clusters based on proximity.
     Useful for suggesting which activities work well together.
@@ -220,3 +220,4 @@ def estimate_travel_time(activity1, activity2, speed_kmh = 5.0):
     
     # Add 15 min buffer for navigation/waiting & return travel_time value
     return travel_time + 0.25  
+
