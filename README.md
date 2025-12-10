@@ -12,9 +12,7 @@ To run Wandr, open up the folder containing the downloaded repository and run th
 python main.py
 ```
 
-To use Wandr with APIs, first obtain API keys from Geoapify (https://myprojects.geoapify.com/) and Amadeus (https://developers.amadeus.com/register).    
-Then, change the .env file in your folder to contain your API keys by replacing the relevant "your_api_key_here" instances.    
-Finally, run the program like normal.
+To use Wandr with APIs, first obtain API keys from Geoapify (https://myprojects.geoapify.com/) and Amadeus (https://developers.amadeus.com/register). Then, change the .env file in your folder to contain your API keys by replacing the relevant "your_api_key_here" instances. Finally, run the program like normal.
 
 ## Files
 Wandr    
