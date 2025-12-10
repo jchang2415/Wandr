@@ -35,7 +35,7 @@ class DayPlan:
         """
         Sum the total time for all activities for that day.
         """
-        return sum(a.duration_hours for a in self.activities)
+        return sum(a.duration for a in self.activities)
 
     # Define a method for adding a new Activity object to a Day Plan object
     def add_activity(self, activity: Activity) -> None:
@@ -52,4 +52,5 @@ class DayPlan:
         return {
             "date": self.date.isoformat(),
             "activities": [a.to_dict() for a in self.activities]
+
         }
