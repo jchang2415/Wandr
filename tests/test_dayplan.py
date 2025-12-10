@@ -1,5 +1,6 @@
 # Unit Testing for DayPlan 
 
+import pytest
 from datetime import date
 from models.dayplan import DayPlan
 from models.activity import Activity
@@ -188,3 +189,4 @@ def test_dayplan_activity_count():
     
     day.add_activity(Activity("Park", "nature", 1.0, 0.0))
     assert len(day.activities) == 2
+
