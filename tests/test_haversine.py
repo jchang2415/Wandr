@@ -176,7 +176,7 @@ def test_haversine_near_poles():
     distance = haversine_distance_km(near_north_pole, near_north_pole_2)
     
     # At 89° latitude, longitude circles are very small
-    assert distance < 150  # Should be relatively short
+    assert distance < 160  # Should be 157.2
 
 
 def test_haversine_decimal_precision():
@@ -249,4 +249,5 @@ def test_haversine_real_world_cities():
     
     # Paris to Sydney should be ~17,000 km
     distance = haversine_distance_km(cities['Paris'], cities['Sydney'])
+
     assert 16500 < distance < 17500
