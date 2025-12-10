@@ -23,6 +23,26 @@ except ImportError:
     API_AVAILABLE = False
     print("⚠️  API not available. Install: pip install requests python-dotenv")
 
+# Import GUI
+try:
+    from gui.gui import WandrGUI, main as gui_main
+    GUI_AVAILABLE = True
+except ImportError:
+    GUI_AVAILABLE = False
+    print("⚠️  GUI not available. Install: pip install tkinter")
+
+
+def display_welcome():
+    """Display welcome message and mode selection."""
+    print("\n" + "="*60)
+    print("WELCOME TO WANDR - YOUR INTERACTIVE TRAVEL PLANNER")
+    print("="*60)
+    print("\nChoose your interface:")
+    print("1. GUI (Graphical Interface) - Recommended")
+    print("2. CLI (Command Line Interface) - Advanced")
+    print("3. Exit")
+
+
 def get_user_inputs():
     '''
     Function for collecting all user inputs via the command line interface.
@@ -100,6 +120,14 @@ def get_user_inputs():
     
     # Prompt user for a cost priority
     prioritize_cost = input("\nPrioritize cheaper activities? (y/n): ").strip().lower() == 'y'
+
+    # Check if user wants to check for flights as well
+    search_flights = False
+    origin_city = None
+    if FLIGHT_API_AVAILABLE:
+        search_flights = input("\nSearch for flights? (y/n): ").strip().lower() == 'y'
+        if search_flights:
+            origin_city = input("Enter your departure city: ").strip()
     
     # Return the gathered information in a formatted dictionary
     return {
@@ -109,7 +137,9 @@ def get_user_inputs():
         'budget': budget,
         'interests': interests,
         'schedule_type': schedule_type,
-        'prioritize_cost': prioritize_cost
+        'prioritize_cost': prioritize_cost,
+        'search_flights': search_flights,
+        'origin_city': origin_city
     }
 
 def display_itinerary(user_inputs, itinerary):
@@ -163,6 +193,43 @@ def display_itinerary(user_inputs, itinerary):
         over = total_cost - trip.budget
         print(f"⚠️  Over budget by ${over:.2f}")
     print("="*60)
+
+
+def search_flights_for_trip(origin_city, destination_city, start_date, end_date):
+    """Search for flights and display results."""
+    if not FLIGHT_API_AVAILABLE:
+        print("\nFlight API not available")
+        return None
+    
+    print("\n" + "="*60)
+    print("FLIGHT SEARCH")
+    print("="*60)
+    
+    try:
+        flight = search_trip_flights(origin_city, destination_city, start_date, end_date)
+        
+        if flight:
+            print(f"\n✈️  CHEAPEST FLIGHT FOUND")
+            print(f"   Route: {flight['origin']} → {flight['destination']}")
+            print(f"   Price: ${flight['total_price']:.2f} {flight['currency']}")
+            print(f"   Departure: {flight['departure_date']} {flight.get('departure_time', '')[:5]}")
+            print(f"   Arrival: {flight['arrival_date']} {flight.get('arrival_time', '')[:5]}")
+            print(f"   Duration: {flight['duration']}")
+            print(f"   Stops: {flight['stops']}")
+            print(f"   Airline: {flight['airline']}")
+            
+            if 'return_departure' in flight:
+                print(f"   Return: {flight.get('return_departure', '').split('T')[0]}")
+            
+            return flight
+        else:
+            print("\nNo flights found")
+            return None
+            
+    except Exception as e:
+        print(f"\nFlight search error: {e}")
+        return None
+
 
 def load_activities(destination, use_api = True):
     """
@@ -231,13 +298,23 @@ def load_activities(destination, use_api = True):
         f"  2. Create data/{dest_key}_activities.csv"
     )
 
-def main():
+def run_cli_mode():
     '''
-    Main entry point for the travel planner.
+    Command line version entry point for the program.
     '''
     
     # Get user inputs
     user_inputs = get_user_inputs()
+    
+    # Search for flights if requested
+    flight_info = None
+    if user_inputs['search_flights'] and user_inputs['origin_city']:
+        flight_info = search_flights_for_trip(
+            user_inputs['origin_city'],
+            user_inputs['destination'],
+            user_inputs['start_date'],
+            user_inputs['end_date']
+        )
     
     # Ask about data source
     use_api = False
@@ -283,6 +360,17 @@ def main():
     
     # Display results
     display_itinerary(trip, itinerary)
+
+    # Display flight info if available
+    if flight_info:
+        print("\n" + "="*60)
+        print("ESTIMATED TOTAL TRIP COST")
+        print("="*60)
+        total_activities = sum(sum(a.price for a in day.activities) for day in itinerary)
+        total_flights = flight_info['total_price']
+        print(f"Activities: ${total_activities:.2f}")
+        print(f"Flights: ${total_flights:.2f}")
+        print(f"TOTAL: ${total_activities + total_flights:.2f}")
     
     # Save results to file
     save = input("\nSave itinerary to file? (y/n): ").strip().lower()
@@ -293,6 +381,13 @@ def main():
                 f.write(f"WANDR ITINERARY: {trip.destination}\n")
                 f.write(f"Dates: {trip.start_date} to {trip.end_date}\n")
                 f.write(f"Budget: ${trip.budget}\n\n")
+
+                if flight_info:
+                    f.write("FLIGHTS:\n")
+                    f.write(f"  {flight_info['origin']} → {flight_info['destination']}\n")
+                    f.write(f"  Price: ${flight_info['total_price']:.2f}\n")
+                    f.write(f"  Departure: {flight_info['departure_date']}\n")
+                    f.write(f"  Return: {flight_info.get('return_departure', 'N/A').split('T')[0]}\n\n")
                 
                 for i, day in enumerate(itinerary, 1):
                     f.write(f"\nDAY {i} - {day.date}\n")
@@ -307,6 +402,37 @@ def main():
             print(f"Error saving file: {e}")
     
     print("\n✨ Thanks for using Wandr! Happy travels! ✨\n")
+
+
+def main():
+    """
+    Main entry point - allow user to choose between GUI and CLI mode.
+    """
+    
+    # If GUI is available, ask which mode
+    if GUI_AVAILABLE:
+        display_welcome()
+        
+        while True:
+            choice = input("\nEnter choice (1-3): ").strip()
+            
+            if choice == '1':
+                print("\nLaunching GUI...")
+                gui_main()
+                break
+            elif choice == '2':
+                print("\nStarting CLI mode...")
+                run_cli_mode()
+                break
+            elif choice == '3':
+                print("\n👋 Goodbye!")
+                sys.exit(0)
+            else:
+                print("❌ Invalid choice. Please enter 1, 2, or 3.")
+    else:
+        # No GUI available, run CLI
+        print("\nGUI not available. Running CLI mode...")
+        run_cli_mode()
 
 if __name__ == "__main__":
     main()
