@@ -9,10 +9,10 @@ from engine.scheduler import create_itinerary
 # Generate sample Activities data for testing
 def sample_data():
     activities = [
-        Activity("Museum", "museum", 2.0, 20.0),
-        Activity("Zoo", "nature", 3.0, 25.0),
-        Activity("Boat Tour", "tour", 1.5, 40.0),
-        Activity("Park", "nature", 1.0, 0.0)
+        Activity("Museum", "museum", 2.0, 20.0, (21.4, 32.4), "Test"),
+        Activity("Zoo", "nature", 3.0, 25.0, (21.4, 32.4), "Test"),
+        Activity("Boat Tour", "tour", 1.5, 40.0, (21.4, 32.4), "Test"),
+        Activity("Park", "nature", 1.0, 0.0, (21.4, 32.4), "Test")
     ]
     return activities
 
@@ -65,3 +65,4 @@ def test_scheduler_respects_budget():
     total_cost = sum(a.price for a in day.activities)
 
     assert total_cost <= 30
+
