@@ -15,10 +15,26 @@ from models.trip import Trip
 from engine.scheduler import create_itinerary
 from utils.csv_reader import load_activities_from_csv
 
+# Import API (allows program to still run if API not working)
+try:
+    from api.geoapify_api import fetch_activities_for_city, get_comprehensive_activities
+    API_AVAILABLE = True
+except ImportError:
+    API_AVAILABLE = False
+    print("⚠️  API not available. Install: pip install requests python-dotenv")
 
 def get_user_inputs():
     '''
     Function for collecting all user inputs via the command line interface.
+
+    **Parameters**
+
+        None
+
+    **Returns**
+
+        *dict*
+            Dictionary containing parsed user input.
     '''
     print("\n" + "="*60)
     print("WELCOME TO WANDR - YOUR INTERACTIVE TRAVEL PLANNER")
@@ -116,17 +132,104 @@ def display_itinerary(user_inputs, itinerary):
     
     # Display itinerary
     print("\n--- Itinerary ---")
-    if itinerary:
-        for i, day in enumerate(itinerary, 1):
-            print(f"\nDAY {i} - {day.date}\n")
-            print("-" * 40 + "\n")
-            for activity in day.activities:
-                print(f"  - {activity.name} ({activity.duration}h, ${activity.price})\n")
+    total_cost = 0
+    
+    for i, day in enumerate(itinerary, 1):
+        day_cost = sum(a.price for a in day.activities)
+        total_cost += day_cost
+        
+        print(f"\nDAY {i} - {day.date}")
+        print(f"   Total: {day.total_duration():.1f} hours, ${day_cost:.2f}")
+        print("-" * 60)
+        
+        if not day.activities:
+            print("   No activities scheduled")
+        else:
+            for j, activity in enumerate(day.activities, 1):
+                print(f"   {j}. {activity.name}")
+                print(f"      {activity.category} | "
+                      f"{activity.duration_hours}h | "  # ← FIXED
+                      f"${activity.price}")
                 if activity.description:
-                    print(f"    {activity.description}\n")
+                    desc = activity.description[:80] + "..." if len(activity.description) > 80 else activity.description
+                    print(f"      {desc}")
+    
+    print("\n" + "="*60)
+    print(f"TOTAL TRIP COST: ${total_cost:.2f} / ${trip.budget:.2f}")
+    if total_cost <= trip.budget:
+        remaining = trip.budget - total_cost
+        print(f"✅ Within budget! (${remaining:.2f} remaining)")
     else:
-        print("No activities found for the selected criteria.")
+        over = total_cost - trip.budget
+        print(f"⚠️  Over budget by ${over:.2f}")
+    print("="*60)
 
+def load_activities(destination, use_api = True):
+    """
+    Load activities for a destination.
+    Try API first, fall back to CSV if needed.
+    
+    **Parameters**
+
+        destination: *str*
+            City name of destination
+
+        use_api: *bool*
+            Whether to try API first.
+            Defaults to True
+    
+    **Returns**
+        
+        activities: *list[Activity]*
+            List of Activity objects
+    """
+    activities = []
+    
+    # Try API first if available
+    if use_api and API_AVAILABLE:
+        try:
+            print(f"\n Fetching activities from Geoapify API for {destination}...")
+            activities = get_comprehensive_activities(destination, total_limit=50)
+            
+            if activities:
+                print(f"Loaded {len(activities)} activities from API")
+                return activities
+            else:
+                print("⚠️  API returned no results, trying CSV...")
+        except Exception as e:
+            print(f"⚠️  API failed: {e}")
+            print("📂 Falling back to CSV data...")
+    
+    # Fall back to CSV
+    csv_map = {
+        'paris': 'paris',
+        'tokyo': 'tokyo', 
+        'new york': 'nyc',
+        'new york city': 'nyc',
+        'nyc': 'nyc',
+    }
+    
+    dest_key = destination.lower().strip()
+    file_base = csv_map.get(dest_key, dest_key.replace(' ', '_'))
+    csv_path = Path(f"data/{file_base}_activities.csv")
+    
+    if not csv_path.exists():
+        # Try sample data
+        csv_path = Path("data/sample_data1.csv")
+    
+    if csv_path.exists():
+        print(f"\n Loading activities from {csv_path}...")
+        activities = load_activities_from_csv(csv_path)
+        print(f"Loaded {len(activities)} activities from CSV")
+        return activities
+    
+    # No data found
+    raise FileNotFoundError(
+        f"No data available for {destination}.\n"
+        f"Please either:\n"
+        f"  1. Set up Geoapify API (see README)\n"
+        f"  2. Create data/{dest_key}_activities.csv"
+    )
 
 def main():
     '''
@@ -136,23 +239,25 @@ def main():
     # Get user inputs
     user_inputs = get_user_inputs()
     
-    # Import relevant activities from CSV data
-    destination_slug = user_inputs['destination'].lower().replace(' ', '_')
-    csv_path = Path(f"data/{destination_slug}_activities.csv")
+    # Ask about data source
+    use_api = False
+    if API_AVAILABLE:
+        print("\n--- DATA SOURCE ---")
+        use_api_input = input("Fetch activities from API? (y/n, default=y): ").strip().lower()
+        use_api = use_api_input != 'n'
     
-    # Indicate if there is no data for the destination chpsen
-    if not csv_path.exists():
-        print(f"\n Error: No activity data available '{user_inputs['destination']}'")
-        print("Please try another destination with available data.")
+    # Load activities
+    try:
+        activities = load_activities(user_inputs['destination'], use_api=use_api)
+    except FileNotFoundError as e:
+        print(f"\n❌ Error: {e}")
+        return
+    except Exception as e:
+        print(f"\n❌ Unexpected error: {e}")
         return
     
-    print(f"\n Loading activities from {csv_path}...")
-    try:
-        activities = load_activities_from_csv(csv_path)
-        print(f"Loaded {len(activities)} activities")
-    
-    except Exception as e:
-        print(f"Error loading activities: {e}")
+    if not activities:
+        print("\n❌ No activities found.")
         return
     
     # Create Trip class object based on user input
@@ -177,7 +282,7 @@ def main():
     itinerary = create_itinerary(trip, activities, preferences)
     
     # Display results
-    display_itinerary(user_inputs, itinerary)
+    display_itinerary(trip, itinerary)
     
     # Save results to file
     save = input("\nSave itinerary to file? (y/n): ").strip().lower()
