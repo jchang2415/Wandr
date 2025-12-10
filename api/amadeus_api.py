@@ -265,7 +265,7 @@ class AmadeusFlightAPI:
         # Return the 10 cheapest flights
         return all_options[:10]
     
-    def get_airport_code(self, city_name: str) -> Optional[str]:
+    def get_airport_code(self, city_name):
         """
         Search for airport code by city name. Backup hard-coded three-letter airport codes if broader data is not available.
         
