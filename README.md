@@ -56,12 +56,12 @@ Wandr
 
 ## Running Unit Tests
 To run unit tests, make sure pytest is installed. If not installed, install it using:
-
-*pip install pytest*
+    
+```pip install pytest```
 
 Then run the unit tests using this command:
 
-*python -m pytest -v*
+```python -m pytest -v```
 
 Example Output:
 
