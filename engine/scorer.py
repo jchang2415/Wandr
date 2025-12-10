@@ -7,7 +7,7 @@ Takes in an Activity class object and a Preferences class object and outputs a n
 from models.activity import Activity
 from models.preferences import UserPreferences
 
-def score_activity(activity, prefs, already_schedule = None):
+def score_activity(activity, prefs, already_scheduled = None):
     '''
     Scoring that considers:
     - User interests (primary factor)
@@ -168,7 +168,7 @@ def score_all_activities(activities, prefs, already_scheduled = None):
     for activity in activities:
 
         # Calculate a score for the activity
-        score = score_activity(activity, prefs, already_schedu)
+        score = score_activity(activity, prefs, already_scheduled)
         
         # Append a tuple of the activity and its score to the list of scored activities
         scored.append((score, activity))
