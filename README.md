@@ -17,29 +17,29 @@ To use Wandr with APIs, first obtain API keys from Geoapify (https://myprojects.
 ## Files
 Wandr    
 ├─── api    
-│    └─── img    
-│    └─── img    
+│       ├─── img    
+│       └─── img    
 ├─── data    
-│    └─── img    
-│    └─── img     
-│    └─── img     
-│    └─── img    
-│    └─── img    
+│       ├─── img    
+│       ├─── img    
+│       ├─── img    
+│       ├─── img    
+│       └─── img  
 ├─── engine    
-│    └─── img    
-│    └─── img    
+│       ├─── img    
+│       └─── img  
 ├─── gui    
-│    └─── img    
+│       └─── img    
 ├─── models    
-│    └─── img    
-│    └─── img     
-│    └─── img    
-│    └─── img     
+│       ├─── img    
+│       ├─── img    
+│       ├─── img    
+│       └─── img    
 ├─── tests    
 ├─── utils    
-│    └─── img    
-│    └─── img    
-│    └─── img   
+│       ├─── img    
+│       ├─── img    
+│       └─── img   
 ├─── .env    
 ├─── LICENSE    
 ├─── README.md    
