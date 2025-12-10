@@ -2,7 +2,7 @@
 
 import pytest
 from datetime import date
-from models.dayplay import DayPlan
+from models.dayplan import DayPlan
 from models.trip import Trip
 
 def test_trip_initialization():
@@ -281,4 +281,5 @@ def test_trip_fractional_budget():
     )
 
     assert t.budget == 123.45
+
 
