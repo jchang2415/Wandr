@@ -4,7 +4,7 @@ from datetime import date
 from models.activity import Activity
 from models.trip import Trip
 from models.preferences import UserPreferences
-from planner.scheduler import create_itinerary
+from engine.scheduler import create_itinerary
 
 # Generate sample Activities data for testing
 def sample_data():
@@ -63,4 +63,5 @@ def test_scheduler_respects_budget():
     # Check that total cost of generated itinerary is within specified budget
     day = itinerary[0]
     total_cost = sum(a.price for a in day.activities)
+
     assert total_cost <= 30
