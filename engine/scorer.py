@@ -34,6 +34,11 @@ def score_activity(activity, prefs, already_scheduled = None):
     '''
     already_scheduled = already_scheduled or []
     
+    # Normalize values
+    category = (activity.category or "").lower()
+    interests = [i.lower() for i in prefs.interests]
+    price = max(activity.price, 0)  # prevent negative price effects
+    
     # Initialize score
     score = 0.0
     
@@ -104,7 +109,7 @@ def score_activity(activity, prefs, already_scheduled = None):
 
     # Check what has already been scheduled
     for scheduled in already_scheduled:
-        cat = scheduled.category.lower()
+        cat = (scheduled.category or "").lower()
         category_counts[cat] = category_counts.get(cat, 0) + 1
     
     current_cat = activity.category.lower()
