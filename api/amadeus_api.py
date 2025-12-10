@@ -19,7 +19,7 @@ class AmadeusFlightAPI:
     Documentation: https://developers.amadeus.com/self-service/category/flights
     """
     
-    def __init__(self, api_key, api_secret):
+    def __init__(self, api_key = None, api_secret = None):
         """
         Initialize Amadeus client.
         
