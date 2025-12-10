@@ -51,18 +51,18 @@ def test_dayplan_add_multiple_activities():
     assert day.activities[2].name == "Restaurant"
     
 
-def test_dayplan_total_hours():
+def test_dayplan_total_duration():
     '''
-    Test that the total_hours() method of DayPlan class objects works.
+    Test that the total_duration() method of DayPlan class objects works.
     '''
     # Initialize test DayPlan class object with two sample activities
     day = DayPlan(date=date(2025, 1, 1))
     day.add_activity(Activity("Museum", "museum", 2.0, 20.0, (21.4, 32.4), "Test"))
     day.add_activity(Activity("Park", "nature", 1.0, 0.0, (21.4, 32.4), "Test"))
 
-    # Check output of total_hours() method is as expected
+    # Check output of total_duration() method is as expected
 
-    assert day.total_hours() == 3.0
+    assert day.total_duration() == 3.0
 
 def test_dayplan_total_cost():
     '''
@@ -82,7 +82,7 @@ def test_dayplan_empty_totals():
     '''
     day = DayPlan(date=date(2025, 1, 1))
 
-    assert day.total_hours() == 0.0
+    assert day.total_duration() == 0.0
     assert day.total_cost() == 0.0
 
 
@@ -123,7 +123,7 @@ def test_dayplan_with_free_activities():
     day.add_activity(Activity("Walk", "nature", 1.5, 0.0, (21.4, 32.4), "Test"))
 
     assert day.total_cost() == 0.0
-    assert day.total_hours() == 2.5
+    assert day.total_duration() == 2.5
 
 
 def test_dayplan_with_expensive_activities():
@@ -173,7 +173,7 @@ def test_dayplan_with_fractional_hours():
     day.add_activity(Activity("Quick Visit", "museum", 0.5, 10.0, (21.4, 32.4), "Test"))
     day.add_activity(Activity("Snack", "food", 0.25, 5.0, (21.4, 32.4), "Test"))
 
-    assert day.total_hours() == 0.75
+    assert day.total_duration() == 0.75
 
 
 def test_dayplan_activity_count():
@@ -189,5 +189,6 @@ def test_dayplan_activity_count():
     
     day.add_activity(Activity("Park", "nature", 1.0, 0.0, (21.4, 32.4), "Test"))
     assert len(day.activities) == 2
+
 
 
