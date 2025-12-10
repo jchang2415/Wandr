@@ -23,7 +23,7 @@ def test_dayplan_add_activity():
     '''
     # Initialize test DayPlan class object and test Activity class object
     day = DayPlan(date=date(2025, 1, 1))
-    a = Activity("Zoo", "nature", 3.0, 15.0)
+    a = Activity("Zoo", "nature", 3.0, 15.0, (21.4, 32.4), "Test")
 
     # Attempt to use add_activity method of DayPlan class object
     day.add_activity(a)
@@ -37,9 +37,9 @@ def test_dayplan_add_multiple_activities():
     Test adding multiple activities to a single day
     '''
     day = DayPlan(date=date(2025, 1, 1))
-    a1 = Activity("Museum", "museum", 2.0, 20.0)
-    a2 = Activity("Park", "nature", 1.0, 0.0)
-    a3 = Activity("Restaurant", "food", 1.5, 30.0)
+    a1 = Activity("Museum", "museum", 2.0, 20.0, (21.4, 32.4), "Test")
+    a2 = Activity("Park", "nature", 1.0, 0.0, (21.4, 32.4), "Test")
+    a3 = Activity("Restaurant", "food", 1.5, 30.0, (21.4, 32.4), "Test")
 
     day.add_activity(a1)
     day.add_activity(a2)
@@ -57,8 +57,8 @@ def test_dayplan_total_hours():
     '''
     # Initialize test DayPlan class object with two sample activities
     day = DayPlan(date=date(2025, 1, 1))
-    day.add_activity(Activity("Museum", "museum", 2.0, 20.0))
-    day.add_activity(Activity("Park", "nature", 1.0, 0.0))
+    day.add_activity(Activity("Museum", "museum", 2.0, 20.0, (21.4, 32.4), "Test"))
+    day.add_activity(Activity("Park", "nature", 1.0, 0.0, (21.4, 32.4), "Test"))
 
     # Check output of total_hours() method is as expected
 
@@ -69,9 +69,9 @@ def test_dayplan_total_cost():
     Test that total_cost() correctly sums activity prices
     '''
     day = DayPlan(date=date(2025, 1, 1))
-    day.add_activity(Activity("Museum", "museum", 2.0, 20.0))
-    day.add_activity(Activity("Park", "nature", 1.0, 0.0))
-    day.add_activity(Activity("Restaurant", "food", 1.5, 35.0))
+    day.add_activity(Activity("Museum", "museum", 2.0, 20.0, (21.4, 32.4), "Test"))
+    day.add_activity(Activity("Park", "nature", 1.0, 0.0, (21.4, 32.4), "Test"))
+    day.add_activity(Activity("Restaurant", "food", 1.5, 35.0, (21.4, 32.4), "Test"))
 
     assert day.total_cost() == 55.0
 
@@ -91,8 +91,8 @@ def test_dayplan_to_dict():
     Test that to_dict() correctly converts DayPlan to dictionary
     '''
     day = DayPlan(date=date(2025, 1, 1))
-    day.add_activity(Activity("Museum", "museum", 2.0, 20.0))
-    day.add_activity(Activity("Park", "nature", 1.0, 0.0))
+    day.add_activity(Activity("Museum", "museum", 2.0, 20.0, (21.4, 32.4), "Test"))
+    day.add_activity(Activity("Park", "nature", 1.0, 0.0, (21.4, 32.4), "Test"))
 
     result = day.to_dict()
 
@@ -119,8 +119,8 @@ def test_dayplan_with_free_activities():
     Test day with only free activities
     '''
     day = DayPlan(date=date(2025, 1, 1))
-    day.add_activity(Activity("Park", "nature", 1.0, 0.0))
-    day.add_activity(Activity("Walk", "nature", 1.5, 0.0))
+    day.add_activity(Activity("Park", "nature", 1.0, 0.0, (21.4, 32.4), "Test"))
+    day.add_activity(Activity("Walk", "nature", 1.5, 0.0, (21.4, 32.4), "Test"))
 
     assert day.total_cost() == 0.0
     assert day.total_hours() == 2.5
@@ -131,8 +131,8 @@ def test_dayplan_with_expensive_activities():
     Test day with expensive activities
     '''
     day = DayPlan(date=date(2025, 1, 1))
-    day.add_activity(Activity("Show", "entertainment", 2.5, 150.0))
-    day.add_activity(Activity("Fine Dining", "food", 2.0, 100.0))
+    day.add_activity(Activity("Show", "entertainment", 2.5, 150.0, (21.4, 32.4), "Test"))
+    day.add_activity(Activity("Fine Dining", "food", 2.0, 100.0, (21.4, 32.4), "Test"))
 
     assert day.total_cost() == 250.0
 
@@ -152,9 +152,9 @@ def test_dayplan_activities_order_preserved():
     Test that activities maintain their order
     '''
     day = DayPlan(date=date(2025, 1, 1))
-    a1 = Activity("First", "museum", 1.0, 10.0)
-    a2 = Activity("Second", "nature", 1.0, 0.0)
-    a3 = Activity("Third", "food", 1.0, 20.0)
+    a1 = Activity("First", "museum", 1.0, 10.0, (21.4, 32.4), "Test")
+    a2 = Activity("Second", "nature", 1.0, 0.0, (21.4, 32.4), "Test")
+    a3 = Activity("Third", "food", 1.0, 20.0, (21.4, 32.4), "Test")
 
     day.add_activity(a1)
     day.add_activity(a2)
@@ -170,8 +170,8 @@ def test_dayplan_with_fractional_hours():
     Test that DayPlan correctly handles fractional hours
     '''
     day = DayPlan(date=date(2025, 1, 1))
-    day.add_activity(Activity("Quick Visit", "museum", 0.5, 10.0))
-    day.add_activity(Activity("Snack", "food", 0.25, 5.0))
+    day.add_activity(Activity("Quick Visit", "museum", 0.5, 10.0, (21.4, 32.4), "Test"))
+    day.add_activity(Activity("Snack", "food", 0.25, 5.0, (21.4, 32.4), "Test"))
 
     assert day.total_hours() == 0.75
 
@@ -184,9 +184,10 @@ def test_dayplan_activity_count():
     
     assert len(day.activities) == 0
     
-    day.add_activity(Activity("Museum", "museum", 2.0, 20.0))
+    day.add_activity(Activity("Museum", "museum", 2.0, 20.0, (21.4, 32.4), "Test"))
     assert len(day.activities) == 1
     
-    day.add_activity(Activity("Park", "nature", 1.0, 0.0))
+    day.add_activity(Activity("Park", "nature", 1.0, 0.0, (21.4, 32.4), "Test"))
     assert len(day.activities) == 2
+
 
