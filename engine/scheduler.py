@@ -8,7 +8,7 @@ from models.dayplan import DayPlan
 from engine.scorer import score_activity
 from utils.haversine import haversine_distance_km
 
-def create_itinerary_with_clustering(trip, activities, prefs, locked_activities = None):
+def create_itinerary(trip, activities, prefs, locked_activities = None):
     """
     Enhanced scheduler that:
     - Scores activities based on preferences
@@ -220,4 +220,5 @@ def estimate_travel_time(activity1, activity2, speed_kmh = 5.0):
     
     # Add 15 min buffer for navigation/waiting & return travel_time value
     return travel_time + 0.25  
+
 
