@@ -32,7 +32,7 @@ Park,nature,1.5,0.0,41.793,-87.607,Beautiful park"""
         assert len(activities) == 2
         assert activities[0].name == "Museum"
         assert activities[0].category == "museum"
-        assert activities[0].duration_hours == 2.0
+        assert activities[0].duration == 2.0
         assert activities[0].price == 15.0
         assert activities[1].name == "Park"
     finally:
@@ -74,7 +74,7 @@ Activity,museum,,,,"""
         activities = load_activities_from_csv(csv_path)
         
         assert len(activities) == 1
-        assert activities[0].duration_hours == 1.0  # Default
+        assert activities[0].duration == 1.0  # Default
         assert activities[0].price == 0.0  # Default
         assert activities[0].location is None
         assert activities[0].description == ""
@@ -172,7 +172,7 @@ Tour,tour,0.5,12.50,41.881,-87.623,Quick tour"""
     try:
         activities = load_activities_from_csv(csv_path)
         
-        assert activities[0].duration_hours == 0.5
+        assert activities[0].duration == 0.5
         assert activities[0].price == 12.50
     finally:
         csv_path.unlink()
@@ -308,8 +308,9 @@ River Walk,nature,1,0,41.890,-87.622,"Scenic walk along the river" """
         
         assert len(activities) == 6
         assert activities[0].name == "City Museum"
-        assert activities[0].duration_hours == 2.0
+        assert activities[0].duration == 2.0
         assert activities[3].name == "Fine Dining"
         assert activities[3].price == 75.0
     finally:
+
         csv_path.unlink()
