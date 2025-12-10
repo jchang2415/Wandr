@@ -17,36 +17,35 @@ Then, change the .env file in your folder to contain your API keys by replacing 
 Finally, run the program like normal.
 
 ## Files
-Wandr
-├─── api
-│    └─── img
-│    └─── img
-├─── data
-│    └─── img
-│    └─── img
-│    └─── img
-│    └─── img
-│    └─── img
-├─── engine
-│    └─── img
-│    └─── img
-
-├─── gui
-│    └─── img
-├─── models
-│    └─── img
-│    └─── img
-│    └─── img
-│    └─── img
-├─── tests
-├─── utils
-│    └─── img
-│    └─── img
-│    └─── img
-├─── .env
-├─── LICENSE
-├─── README.md
-└─── main.py
+Wandr    
+├─── api    
+│    └─── img    
+│    └─── img    
+├─── data    
+│    └─── img    
+│    └─── img     
+│    └─── img     
+│    └─── img    
+│    └─── img    
+├─── engine    
+│    └─── img    
+│    └─── img    
+├─── gui    
+│    └─── img    
+├─── models    
+│    └─── img    
+│    └─── img     
+│    └─── img    
+│    └─── img     
+├─── tests    
+├─── utils    
+│    └─── img    
+│    └─── img    
+│    └─── img   
+├─── .env    
+├─── LICENSE    
+├─── README.md    
+└─── main.py    
 
 ## Features
 - Generates an itinerary based on your indicated trip dates, destination, and budget
@@ -58,11 +57,11 @@ Wandr
 ## Running Unit Tests
 To run unit tests, make sure pytest is installed. If not installed, install it using:
 
-pip install pytest
+*pip install pytest*
 
 Then run the unit tests using this command:
 
-python -m pytest -v
+*python -m pytest -v*
 
 Example Output:
 
