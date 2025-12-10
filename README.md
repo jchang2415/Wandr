@@ -15,6 +15,7 @@ python main.py
 To use Wandr with APIs, first obtain API keys from Geoapify (https://myprojects.geoapify.com/) and Amadeus (https://developers.amadeus.com/register). Then, change the .env file in your folder to contain your API keys by replacing the relevant "your_api_key_here" instances. Finally, run the program like normal.
 
 ## Files
+```
 Wandr    
 ├─── api    
 │       ├─── img    
@@ -43,7 +44,8 @@ Wandr
 ├─── .env    
 ├─── LICENSE    
 ├─── README.md    
-└─── main.py    
+└─── main.py
+```   
 
 ## Features
 - Generates an itinerary based on your indicated trip dates, destination, and budget
