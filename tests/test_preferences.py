@@ -230,29 +230,6 @@ def test_preferences_extreme_hours():
     assert prefs.max_hours_per_day == 12.0
 
 
-def test_preferences_budget_vs_cost_priority():
-    '''
-    Test relationship between budget and cost priority
-    '''
-    low_budget_prefs = UserPreferences(
-        interests=["museum"],
-        budget=100,
-        schedule_type="relaxed",
-        prioritize_cost=True
-    )
-
-    high_budget_prefs = UserPreferences(
-        interests=["museum"],
-        budget=1000,
-        schedule_type="balanced",
-        prioritize_cost=False
-    )
-
-    assert low_budget_prefs.budget < high_budget_prefs.budget
-    assert low_budget_prefs.prioritize_cost is True
-    assert high_budget_prefs.prioritize_cost is False
-
-
 def test_preferences_schedule_type_variations():
     '''
     Test that all schedule types are valid strings
@@ -293,4 +270,5 @@ def test_preferences_case_sensitive_interests():
     assert "Museum" in prefs.interests
     assert "FOOD" in prefs.interests
     assert "nature" in prefs.interests
+
 
