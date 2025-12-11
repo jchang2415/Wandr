@@ -61,15 +61,15 @@ Wandr
 ```   
 
 File Explanations
-- *api/*:  contains code for integrating the program with external APIs (Geoapify for Point of Interest information, Amadeus for Flight information)
-- *data/*: contains csv files containing sample input activity data for use without APIs / demos and information on airport IATA codes
-- *engine/*: contains main "algorithm" files of program that calculate score for each available activity based on indicated user preferences and intelligently organizes them into geographically clustered schedules across days
-- *gui/*: contains code encoding the graphical user interface
-- *models/*: contains code defining classes (Activity, DayPlan, Trip, UserPreferences) for easier interaction of program with the data
-- *tests/*: contains various unit tests for each of our codes (except for APIs and GUI)
-- *utils/*: contains miscallaneous helper functions for parsing CSVs, editing itineraries, and calculating geographic distance
-- *.env*: file required for API use; must obtain own API keys and replace this code with your specific API codes for API aspect to work!
-- *main.py*: main file that serves as entry point for program and integrates all other code
+- *api/* :  contains code for integrating the program with external APIs (Geoapify for Point of Interest information, Amadeus for Flight information)
+- *data/* : contains csv files containing sample input activity data for use without APIs / demos and information on airport IATA codes
+- *engine/* : contains main "algorithm" files of program that calculate score for each available activity based on indicated user preferences and intelligently organizes them into geographically clustered schedules across days
+- *gui/* : contains code encoding the graphical user interface
+- *models/* : contains code defining classes (Activity, DayPlan, Trip, UserPreferences) for easier interaction of program with the data
+- *tests/* : contains various unit tests for each of our codes (except for APIs and GUI)
+- *utils/* : contains miscallaneous helper functions for parsing CSVs, editing itineraries, and calculating geographic distance
+- *.env* : file required for API use; must obtain own API keys and replace this code with your specific API codes for API aspect to work!
+- *main.py* : main file that serves as entry point for program and integrates all other code
 
 ## Features
 - Generates an itinerary based on your indicated trip dates, destination, and budget
