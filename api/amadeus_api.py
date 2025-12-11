@@ -1,7 +1,7 @@
 # Amadeus Flight API Integration
-"""
+'''
 Code for integrating API from Amadeus for real-time flight price searching.
-"""
+'''
 
 import os
 from datetime import date, timedelta
@@ -15,14 +15,14 @@ load_dotenv()
 
 
 class AmadeusFlightAPI:
-    """
+    '''
     Client for Amadeus Flight API.
 
     Documentation: https://developers.amadeus.com/self-service/category/flights
-    """
+    '''
 
     def __init__(self, api_key=None, api_secret=None):
-        """
+        '''
         Initialize Amadeus client.
 
         **Parameters**
@@ -32,7 +32,7 @@ class AmadeusFlightAPI:
 
             api_secret: *str*
                 Amadeus API secret (or loads from .env)
-        """
+        '''
         # Get API keys from argument or environment
         api_key = api_key or os.getenv('AMADEUS_API_KEY')
         api_secret = api_secret or os.getenv('AMADEUS_API_SECRET')
@@ -300,7 +300,7 @@ class AmadeusFlightAPI:
         return all_options[:10]
 
     def get_airport_code(self, city_name):
-        """
+        '''
         Search for airport code by city name. Backup hard-coded three-letter airport codes if broader data is not available.
 
         **Parameters**
@@ -311,7 +311,7 @@ class AmadeusFlightAPI:
         **Returns**
 
             Three letter primary airport code (IATA) or None
-        """
+        '''
         # #
         # csv_path = Path("data/airports.csv")
 
@@ -441,7 +441,7 @@ def search_trip_flights(
         destination_city,
         departure_date,
         return_date):
-    """
+    '''
     Final simple function to search for flights for a trip. Contains all the other functions wrapped into a simpler format.
 
     **Parameters**
@@ -465,7 +465,7 @@ def search_trip_flights(
 
     Example:
         flight = search_trip_flights("New York", "Paris", date(2025, 6, 15), date(2025, 6, 22))
-    """
+    '''
     try:
         # Initialize API
         api = AmadeusFlightAPI()
