@@ -256,7 +256,7 @@ def test_score_variety_third_activity_penalty(museum_activity, balanced_prefs):
     ]
 
     score_first = score_activity(museum_activity, balanced_prefs, [])
-    score = score_activity(museum_activity, balanced_prefs, already_scheduled)
+    score_third = score_activity(museum_activity, balanced_prefs, already_scheduled)
     
     # Should have -10 penalty for third activity of the same category
     assert score_third == score_first - 10
@@ -626,6 +626,7 @@ def test_score_ranges_reasonable():
         score = score_activity(activity, prefs)
         # Scores shouldn't be extremely large (> 1000) or small (< -1000)
         assert -1000 < score < 1000
+
 
 
 
