@@ -2,6 +2,7 @@
 
 from math import radians, sin, cos, sqrt, atan2
 
+
 def haversine_distance_km(a, b):
     """
     Compute the great-circle distance between two points in kilometers using
@@ -35,7 +36,7 @@ def haversine_distance_km(a, b):
     dlon = rlon2 - rlon1
 
     # Define Earth's radius in kilometers
-    R = 6371.0 
+    R = 6371.0
 
     # Apply Haversine formula
     h = sin(dlat / 2) ** 2 + (cos(rlat1) * cos(rlat2) * sin(dlon / 2) ** 2)

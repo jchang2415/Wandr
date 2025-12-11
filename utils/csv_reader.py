@@ -11,6 +11,8 @@ from pathlib import Path
 from models.activity import Activity
 
 # Define helper method for preventing errors on processing floats
+
+
 def _safe_float(value: Optional[str], default: float = 0.0) -> float:
     '''
     Convert string to float safely, return default on empty or bad input.
@@ -23,6 +25,8 @@ def _safe_float(value: Optional[str], default: float = 0.0) -> float:
         return default
 
 # Define a helper method for correctly parsing in latitude and longitude data
+
+
 def _safe_coord(lat: Optional[str], lon: Optional[str]) -> Optional[tuple]:
     '''
     Convert lat/lon strings to a (lat, lon) tuple or return None if coordinates
@@ -36,6 +40,8 @@ def _safe_coord(lat: Optional[str], lon: Optional[str]) -> Optional[tuple]:
         return None
 
 # Define method for parsing activity data from input csv
+
+
 def load_activities_from_csv(path: str | Path) -> List[Activity]:
     '''
     Read activities from a CSV file and return a list of Activity objects.
@@ -59,27 +65,32 @@ def load_activities_from_csv(path: str | Path) -> List[Activity]:
     with path.open(newline="", encoding="utf-8") as infile:
         reader = csv.DictReader(infile)
 
-        # Read the file row by row and parse data by the different types of information about an activity
+        # Read the file row by row and parse data by the different types of
+        # information about an activity
         for i, row in enumerate(reader, start=1):
-            
+
             # Require basic information of name and category for an activity
             name = row.get("name", "").strip()
             category = row.get("category", "").strip() or "other"
 
-            # Use "safe" method in case duration or pricing information is missing
+            # Use "safe" method in case duration or pricing information is
+            # missing
             duration = _safe_float(row.get("duration_hours"), default=1.0)
             price = _safe_float(row.get("price"), default=0.0)
 
-            # Use "safe" method in case location or description information is missing
+            # Use "safe" method in case location or description information is
+            # missing
             location = _safe_coord(row.get("lat"), row.get("lon"))
             description = (row.get("description") or "").strip()
 
             # Skip rows without a name
             if not name:
-                
-                raise ValueError(f"Missing activity name in CSV row {i}: {row}")
 
-            # Create an Activity class object with the parsed information from that row
+                raise ValueError(
+                    f"Missing activity name in CSV row {i}: {row}")
+
+            # Create an Activity class object with the parsed information from
+            # that row
             activity = Activity(
                 name=name,
                 category=category,
@@ -95,4 +106,3 @@ def load_activities_from_csv(path: str | Path) -> List[Activity]:
     # Return the parsed list of all activities in the input file
 
     return activities
-

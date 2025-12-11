@@ -5,6 +5,7 @@ from datetime import date
 from typing import List
 from .dayplan import DayPlan
 
+
 @dataclass
 class Trip:
     """

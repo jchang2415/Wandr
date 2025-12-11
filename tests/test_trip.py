@@ -6,6 +6,7 @@ from models.activity import Activity
 from models.dayplan import DayPlan
 from models.trip import Trip
 
+
 def test_trip_initialization():
     '''
     Test Trip class object initialization
@@ -25,6 +26,7 @@ def test_trip_initialization():
     assert t.end_date == date(2025, 12, 22)
     assert t.budget == 500
     assert "nature" in t.interests
+
 
 def test_trip_length():
     '''
@@ -102,7 +104,7 @@ def test_trip_with_itinerary():
 
     day1 = DayPlan(date=date(2025, 6, 1))
     day1.add_activity(Activity("Louvre", "museum", 3.0, 20.0))
-    
+
     day2 = DayPlan(date=date(2025, 6, 2))
     day2.add_activity(Activity("Eiffel Tower", "landmark", 2.0, 25.0))
 
@@ -209,8 +211,14 @@ def test_trip_with_many_interests():
     '''
     Test trip with many different interests
     '''
-    interests = ["museum", "nature", "food", "shopping", "entertainment", "landmark"]
-    
+    interests = [
+        "museum",
+        "nature",
+        "food",
+        "shopping",
+        "entertainment",
+        "landmark"]
+
     t = Trip(
         destination="Big City",
         start_date=date(2025, 6, 1),
@@ -282,6 +290,3 @@ def test_trip_fractional_budget():
     )
 
     assert t.budget == 123.45
-
-
-

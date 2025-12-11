@@ -8,6 +8,7 @@ from datetime import date
 from typing import List
 from .activity import Activity
 
+
 @dataclass
 class DayPlan:
     """

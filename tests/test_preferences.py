@@ -3,6 +3,7 @@
 import pytest
 from models.preferences import UserPreferences
 
+
 def test_preferences_initialization():
     '''
     Testing initialization of a User Preferences class object and attributes
@@ -16,7 +17,7 @@ def test_preferences_initialization():
     assert prefs.interests == ["museum"]
     assert prefs.budget == 300
     assert prefs.schedule_type == "balanced"
-    
+
 
 def test_preferences_defaults():
     '''
@@ -270,5 +271,3 @@ def test_preferences_case_sensitive_interests():
     assert "Museum" in prefs.interests
     assert "FOOD" in prefs.interests
     assert "nature" in prefs.interests
-
-

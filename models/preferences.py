@@ -3,6 +3,7 @@
 from dataclasses import dataclass
 from typing import List
 
+
 @dataclass
 class UserPreferences:
     '''
@@ -14,9 +15,9 @@ class UserPreferences:
     - Prioritized aspect (e.g.cost, distance)
     '''
     # Define attributes
-    interests: List[str]             
-    budget: float                      
-    schedule_type: str                  
+    interests: List[str]
+    budget: float
+    schedule_type: str
 
     # Additional tuning knobs
     min_hours_per_day: float = 3.0

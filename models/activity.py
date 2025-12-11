@@ -6,10 +6,11 @@ Define
 
 from dataclasses import dataclass
 
+
 @dataclass(frozen=True)
 class Activity:
     '''
-    This defines a class called "Activity" to store our things to do in our app. 
+    This defines a class called "Activity" to store our things to do in our app.
     These activities have an associated name, category, duration (in hours), cost (in USD), location, and description.
     These activities can be assembled to form itineraries.
     '''
@@ -18,7 +19,7 @@ class Activity:
 
     # Define "category" attribute
     category: str
-    
+
     # Define "duration" attribute; in HOURS
     duration: float
 
@@ -46,10 +47,3 @@ class Activity:
             "location": self.location,
             "description": self.description,
         }
-
-
-
-
-
-
-

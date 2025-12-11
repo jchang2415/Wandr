@@ -116,36 +116,40 @@ def packed_prefs():
 # BASIC SCHEDULER TESTS
 # ============================================================================
 
-def test_scheduler_creates_correct_number_of_days(basic_trip, sample_activities, balanced_prefs):
+def test_scheduler_creates_correct_number_of_days(
+        basic_trip, sample_activities, balanced_prefs):
     '''
     Test that scheduler creates one DayPlan per trip day
     '''
     itinerary = create_itinerary(basic_trip, sample_activities, balanced_prefs)
-    
+
     assert len(itinerary) == basic_trip.trip_length()
     assert len(itinerary) == 3
 
 
-def test_scheduler_respects_daily_hour_limit(basic_trip, sample_activities, balanced_prefs):
+def test_scheduler_respects_daily_hour_limit(
+        basic_trip, sample_activities, balanced_prefs):
     '''
     Test that no day exceeds max_hours_per_day
     '''
     itinerary = create_itinerary(basic_trip, sample_activities, balanced_prefs)
-    
+
     for day in itinerary:
         assert day.total_duration() <= balanced_prefs.max_hours_per_day
 
 
-def test_scheduler_no_duplicate_activities(basic_trip, sample_activities, balanced_prefs):
+def test_scheduler_no_duplicate_activities(
+        basic_trip, sample_activities, balanced_prefs):
     '''
     Test that activities aren't scheduled multiple times
     '''
     itinerary = create_itinerary(basic_trip, sample_activities, balanced_prefs)
-    
+
     seen = set()
     for day in itinerary:
         for activity in day.activities:
-            assert activity not in seen, f"Activity '{activity.name}' scheduled twice"
+            assert activity not in seen, f"Activity '{
+                activity.name}' scheduled twice"
             seen.add(activity)
 
 
@@ -159,19 +163,25 @@ def test_scheduler_respects_budget(basic_trip, sample_activities):
         schedule_type="balanced",
         prioritize_cost=True
     )
-    
+
     itinerary = create_itinerary(basic_trip, sample_activities, prefs)
-    
+
     total_cost = sum(day.total_cost() for day in itinerary)
     assert total_cost <= basic_trip.budget
 
 
-def test_scheduler_with_single_day_trip(single_day_trip, sample_activities, balanced_prefs):
+def test_scheduler_with_single_day_trip(
+        single_day_trip,
+        sample_activities,
+        balanced_prefs):
     '''
     Test scheduler with one-day trip
     '''
-    itinerary = create_itinerary(single_day_trip, sample_activities, balanced_prefs)
-    
+    itinerary = create_itinerary(
+        single_day_trip,
+        sample_activities,
+        balanced_prefs)
+
     assert len(itinerary) == 1
     assert itinerary[0].date == single_day_trip.start_date
 
@@ -181,7 +191,7 @@ def test_scheduler_with_no_activities(basic_trip, balanced_prefs):
     Test scheduler with empty activity list
     '''
     itinerary = create_itinerary(basic_trip, [], balanced_prefs)
-    
+
     assert len(itinerary) == basic_trip.trip_length()
     for day in itinerary:
         assert len(day.activities) == 0
@@ -191,10 +201,11 @@ def test_scheduler_with_single_activity(basic_trip, balanced_prefs):
     '''
     Test scheduler with only one activity available
     '''
-    activities = [Activity("Museum", "museum", 2.0, 20.0, (40.7128, -74.0060), "Museum")]
-    
+    activities = [Activity("Museum", "museum", 2.0, 20.0,
+                           (40.7128, -74.0060), "Museum")]
+
     itinerary = create_itinerary(basic_trip, activities, balanced_prefs)
-    
+
     # Should only appear once across all days
     total_activities = sum(len(day.activities) for day in itinerary)
     assert total_activities == 1
@@ -204,12 +215,13 @@ def test_scheduler_with_single_activity(basic_trip, balanced_prefs):
 # SCHEDULE TYPE TESTS
 # ============================================================================
 
-def test_scheduler_relaxed_has_fewer_activities(basic_trip, sample_activities, relaxed_prefs):
+def test_scheduler_relaxed_has_fewer_activities(
+        basic_trip, sample_activities, relaxed_prefs):
     '''
     Test that relaxed schedule has fewer activities per day
     '''
     itinerary = create_itinerary(basic_trip, sample_activities, relaxed_prefs)
-    
+
     for day in itinerary:
         # Relaxed should have shorter days
         assert day.total_duration() <= 5.0
@@ -217,7 +229,8 @@ def test_scheduler_relaxed_has_fewer_activities(basic_trip, sample_activities, r
         assert len(day.activities) <= 4
 
 
-def test_scheduler_packed_maximizes_activities(basic_trip, sample_activities, packed_prefs):
+def test_scheduler_packed_maximizes_activities(
+        basic_trip, sample_activities, packed_prefs):
     '''
     Test that packed schedule tries to fit more activities
     '''
@@ -227,13 +240,15 @@ def test_scheduler_packed_maximizes_activities(basic_trip, sample_activities, pa
         schedule_type="relaxed",
         max_hours_per_day=5.0
     )
-    
-    packed_itinerary = create_itinerary(basic_trip, sample_activities, packed_prefs)
-    relaxed_itinerary = create_itinerary(basic_trip, sample_activities, relaxed_prefs)
-    
+
+    packed_itinerary = create_itinerary(
+        basic_trip, sample_activities, packed_prefs)
+    relaxed_itinerary = create_itinerary(
+        basic_trip, sample_activities, relaxed_prefs)
+
     packed_total = sum(len(day.activities) for day in packed_itinerary)
     relaxed_total = sum(len(day.activities) for day in relaxed_itinerary)
-    
+
     # Packed should schedule more activities overall
     assert packed_total >= relaxed_total
 
@@ -242,13 +257,14 @@ def test_scheduler_packed_maximizes_activities(basic_trip, sample_activities, pa
 # GEOGRAPHIC CLUSTERING TESTS
 # ============================================================================
 
-def test_scheduler_groups_nearby_activities(basic_trip, sample_activities, balanced_prefs):
+def test_scheduler_groups_nearby_activities(
+        basic_trip, sample_activities, balanced_prefs):
     '''
     Test that scheduler tends to group geographically close activities
     '''
     balanced_prefs.prioritize_distance = True
     itinerary = create_itinerary(basic_trip, sample_activities, balanced_prefs)
-    
+
     # Check that activities on same day are relatively close
     for day in itinerary:
         if len(day.activities) >= 2:
@@ -258,20 +274,27 @@ def test_scheduler_groups_nearby_activities(basic_trip, sample_activities, balan
                 from utils.haversine import haversine_distance_km
                 distances = []
                 for i in range(len(locations) - 1):
-                    dist = haversine_distance_km(locations[i], locations[i+1])
+                    dist = haversine_distance_km(
+                        locations[i], locations[i + 1])
                     distances.append(dist)
                 avg_distance = sum(distances) / len(distances)
-                
+
                 # Activities should generally be within 5km of each other
                 assert avg_distance < 5.0
 
 
-def test_scheduler_without_locations(basic_trip, sample_activities_no_location, balanced_prefs):
+def test_scheduler_without_locations(
+        basic_trip,
+        sample_activities_no_location,
+        balanced_prefs):
     '''
     Test that scheduler works when activities have no location data
     '''
-    itinerary = create_itinerary(basic_trip, sample_activities_no_location, balanced_prefs)
-    
+    itinerary = create_itinerary(
+        basic_trip,
+        sample_activities_no_location,
+        balanced_prefs)
+
     # Should still create valid itinerary
     assert len(itinerary) == basic_trip.trip_length()
     # Should have some activities scheduled
@@ -283,46 +306,57 @@ def test_scheduler_without_locations(basic_trip, sample_activities_no_location, 
 # LOCKED ACTIVITIES TESTS
 # ============================================================================
 
-def test_scheduler_respects_locked_activities(basic_trip, sample_activities, balanced_prefs):
+def test_scheduler_respects_locked_activities(
+        basic_trip, sample_activities, balanced_prefs):
     '''
     Test that locked activities appear in itinerary
     '''
     museum = sample_activities[0]
     park = sample_activities[2]
     locked = [museum, park]
-    
-    itinerary = create_itinerary(basic_trip, sample_activities, balanced_prefs, locked_activities=locked)
-    
+
+    itinerary = create_itinerary(
+        basic_trip,
+        sample_activities,
+        balanced_prefs,
+        locked_activities=locked)
+
     # Check that both locked activities appear
     all_scheduled = []
     for day in itinerary:
         all_scheduled.extend(day.activities)
-    
+
     assert museum in all_scheduled, "Locked museum not in itinerary"
     assert park in all_scheduled, "Locked park not in itinerary"
 
 
-def test_scheduler_prioritizes_locked_activities(basic_trip, sample_activities):
+def test_scheduler_prioritizes_locked_activities(
+        basic_trip, sample_activities):
     '''
     Test that locked activities are scheduled first
     '''
-    expensive_activity = Activity("Expensive Tour", "tour", 8.0, 200.0, (40.7128, -74.0060), "Tour")
+    expensive_activity = Activity(
+        "Expensive Tour", "tour", 8.0, 200.0, (40.7128, -74.0060), "Tour")
     all_activities = sample_activities + [expensive_activity]
-    
+
     prefs = UserPreferences(
         interests=["tour"],
         budget=250,
         schedule_type="balanced",
         max_hours_per_day=9.0
     )
-    
-    itinerary = create_itinerary(basic_trip, all_activities, prefs, locked_activities=[expensive_activity])
-    
+
+    itinerary = create_itinerary(
+        basic_trip,
+        all_activities,
+        prefs,
+        locked_activities=[expensive_activity])
+
     # Expensive activity should appear despite budget constraints
     all_scheduled = []
     for day in itinerary:
         all_scheduled.extend(day.activities)
-    
+
     assert expensive_activity in all_scheduled
 
 
@@ -339,16 +373,16 @@ def test_scheduler_prioritizes_user_interests(basic_trip, sample_activities):
         budget=500,
         schedule_type="balanced"
     )
-    
+
     itinerary = create_itinerary(basic_trip, sample_activities, museum_prefs)
-    
+
     # Count museum activities scheduled
     museum_count = 0
     for day in itinerary:
         for activity in day.activities:
             if activity.category == "museum":
                 museum_count += 1
-    
+
     # Should have at least one museum activity
     assert museum_count >= 1
 
@@ -362,9 +396,9 @@ def test_scheduler_with_no_matching_interests(basic_trip, sample_activities):
         budget=500,
         schedule_type="balanced"
     )
-    
+
     itinerary = create_itinerary(basic_trip, sample_activities, prefs)
-    
+
     # Should still schedule some activities
     total_activities = sum(len(day.activities) for day in itinerary)
     assert total_activities > 0
@@ -372,6 +406,7 @@ def test_scheduler_with_no_matching_interests(basic_trip, sample_activities):
 # ============================================================================
 # EDGE CASES
 # ============================================================================
+
 
 def test_scheduler_with_very_long_trip():
     '''
@@ -384,20 +419,20 @@ def test_scheduler_with_very_long_trip():
         budget=2000,
         interests=["museum"]
     )
-    
+
     activities = [
         Activity(f"Activity {i}", "museum", 2.0, 20.0, None, f"Activity {i}")
         for i in range(50)  # Many activities
     ]
-    
+
     prefs = UserPreferences(
         interests=["museum"],
         budget=2000,
         schedule_type="balanced"
     )
-    
+
     itinerary = create_itinerary(long_trip, activities, prefs)
-    
+
     assert len(itinerary) == 14
 
 
@@ -409,15 +444,15 @@ def test_scheduler_with_all_expensive_activities(basic_trip):
         Activity(f"Expensive {i}", "tour", 2.0, 200.0, None, "Tour")
         for i in range(5)
     ]
-    
+
     prefs = UserPreferences(
         interests=["tour"],
         budget=100,  # Can't afford any
         schedule_type="balanced"
     )
-    
+
     itinerary = create_itinerary(basic_trip, expensive_activities, prefs)
-    
+
     # Should create itinerary structure even if empty
     assert len(itinerary) == basic_trip.trip_length()
 
@@ -429,11 +464,14 @@ def test_scheduler_with_activities_too_long(single_day_trip, balanced_prefs):
     long_activities = [
         Activity("Long Activity", "museum", 10.0, 20.0, None, "Too long")
     ]
-    
+
     balanced_prefs.max_hours_per_day = 5.0
-    
-    itinerary = create_itinerary(single_day_trip, long_activities, balanced_prefs)
-    
+
+    itinerary = create_itinerary(
+        single_day_trip,
+        long_activities,
+        balanced_prefs)
+
     # Activity shouldn't be scheduled
     assert len(itinerary[0].activities) == 0
 
@@ -447,10 +485,10 @@ def test_get_activity_clusters(sample_activities):
     Test geographic clustering of activities
     '''
     clusters = get_activity_clusters(sample_activities, max_distance_km=2.0)
-    
+
     # Should find some clusters
     assert len(clusters) >= 1
-    
+
     # Each cluster should have multiple activities
     for cluster in clusters:
         assert len(cluster) >= 2
@@ -464,9 +502,9 @@ def test_get_activity_clusters_no_locations():
         Activity("A", "museum", 2.0, 20.0, None, "A"),
         Activity("B", "museum", 2.0, 20.0, None, "B"),
     ]
-    
+
     clusters = get_activity_clusters(activities)
-    
+
     # Should return empty or handle gracefully
     assert isinstance(clusters, list)
 
@@ -477,12 +515,12 @@ def test_estimate_travel_time():
     '''
     loc1 = (40.7128, -74.0060)  # NYC
     loc2 = (40.7580, -73.9855)  # Times Square
-    
+
     activity1 = Activity("A", "museum", 2.0, 20.0, loc1, "A")
     activity2 = Activity("B", "landmark", 2.0, 20.0, loc2, "B")
-    
+
     travel_time = estimate_travel_time(activity1, activity2)
-    
+
     # Should be positive
     assert travel_time > 0
     # Should include buffer time (at least 0.25 hours)
@@ -495,9 +533,9 @@ def test_estimate_travel_time_no_locations():
     '''
     activity1 = Activity("A", "museum", 2.0, 20.0, None, "A")
     activity2 = Activity("B", "museum", 2.0, 20.0, None, "B")
-    
+
     travel_time = estimate_travel_time(activity1, activity2)
-    
+
     # Should return default time
     assert travel_time == 0.25
 
@@ -517,27 +555,27 @@ def test_full_itinerary_generation_workflow(sample_activities):
         budget=800,
         interests=["museum", "food", "nature"]
     )
-    
+
     prefs = UserPreferences(
         interests=["museum", "food", "nature"],
         budget=800,
         schedule_type="balanced",
         prioritize_distance=True
     )
-    
+
     itinerary = create_itinerary(trip, sample_activities, prefs)
-    
+
     # Verify basic structure
     assert len(itinerary) == 5
-    
+
     # Verify no day is overbooked
     for day in itinerary:
         assert day.total_duration() <= prefs.max_hours_per_day
-    
+
     # Verify budget
     total_cost = sum(day.total_cost() for day in itinerary)
     assert total_cost <= trip.budget
-    
+
     # Verify no duplicates
     all_activities = []
     for day in itinerary:
@@ -545,17 +583,16 @@ def test_full_itinerary_generation_workflow(sample_activities):
     assert len(all_activities) == len(set(all_activities))
 
 
-def test_itinerary_dates_match_trip_dates(basic_trip, sample_activities, balanced_prefs):
+def test_itinerary_dates_match_trip_dates(
+        basic_trip, sample_activities, balanced_prefs):
     '''
     Test that each day in itinerary has correct date
     '''
     itinerary = create_itinerary(basic_trip, sample_activities, balanced_prefs)
-    
+
     expected_date = basic_trip.start_date
     for day in itinerary:
         assert day.date == expected_date
         expected_date += timedelta(days=1)
-    
+
     assert expected_date == basic_trip.end_date + timedelta(days=1)
-
-
