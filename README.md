@@ -1,5 +1,5 @@
 # Wandr
-This respository is for Wandr, and interactive travel planner app. Wandr helps create a personalized itinerary for you (cheapest flight available included!) for your indicated destination, interests, and travel preferences.
+This respository is for Wandr, an interactive travel planner app. Wandr helps create a personalized itinerary for you (cheapest flight available included!) for your indicated destination, interests, and travel preferences.
 
 <img width="1120" height="908" alt="image" src="https://github.com/user-attachments/assets/b6996392-4074-4d59-b5bf-6782c8de7905" />
 
