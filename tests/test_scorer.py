@@ -255,11 +255,14 @@ def test_score_variety_third_activity_penalty(museum_activity, balanced_prefs):
         Activity("Museum 2", "museum", 2.0, 20.0, None, "M2"),
     ]
 
+    # Score when the category is empty — gets +10 new-category bonus
     score_first = score_activity(museum_activity, balanced_prefs, [])
+
+    # Score when two museums already exist — applies -15 penalty
     score_third = score_activity(museum_activity, balanced_prefs, already_scheduled)
-    
-    # Should have -10 penalty for third activity of the same category
-    assert score_third == score_first - 10
+
+    # Third activity should be = first activity minus 25 ( +10 → -15 )
+    assert score_third == score_first - 25
 
 
 # ============================================================================
@@ -626,6 +629,7 @@ def test_score_ranges_reasonable():
         score = score_activity(activity, prefs)
         # Scores shouldn't be extremely large (> 1000) or small (< -1000)
         assert -1000 < score < 1000
+
 
 
 
