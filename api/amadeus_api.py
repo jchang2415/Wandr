@@ -4,17 +4,12 @@ Code for integrating API from Amadeus for real-time flight price searching.
 """
 
 import os
-import csv
 from datetime import date, timedelta
 from dotenv import load_dotenv
 from amadeus import Client, ResponseError
 
 # Load environment variables (e.g. API keys)
 load_dotenv()
-
-# Load in super large CSV of airport codes ONCE to improve efficiency
-_airport_cache: Dict[str, str] = None
-_airport_cache_with_country: Dict[Tuple[str, str], str] = None
 
 # Define class for communicating with the API for simplicity
 class AmadeusFlightAPI:
@@ -49,72 +44,6 @@ class AmadeusFlightAPI:
             client_id=api_key,
             client_secret=api_secret
         )
-
-        # Load mega airport codes csv into cache on first initialization only
-        if AmadeusFlightAPI._airport_cache is None:
-            self._load_airport_cache()
-    
-
-    def _load_airport_cache(self):
-        '''
-        Class method for loading airport code csv into cache.
-        
-        Creates two indexes:
-        1. By city name only (for simple lookups)
-        2. By (city, country) tuple (for disambiguation cases where multiple cities have same city name)
-        '''
-        csv_path = Path("data/airports.csv")
-        
-        # Initialize caches
-        AmadeusFlightAPI._airport_cache = {}
-        AmadeusFlightAPI._airport_cache_with_country = {}
-
-        # Make sure that the csv exists
-        if not csv_path.exists():
-            print(f"Airport codes CSV not found at {csv_path}")
-            return
-        
-        try:
-            with csv_path.open('r', encoding='utf-8') as f:
-                reader = csv.DictReader(f)
-                
-                # Track which cities have multiple airports/countries
-                city_counts = {}
-                
-                for row in reader:
-                    # Parse information from columns
-                    city = row.get('City', '').strip()
-                    country = row.get('Country', '').strip()
-                    iata_code = row.get('IATA', '').strip().upper()
-                    
-                    if not city or not iata_code:
-                        continue
-                    
-                    # Normalize case for case-insensitive lookup
-                    city_lower = city.lower()
-                    country_lower = country.lower()
-                    
-                    # Store by (city, country) for precise lookups
-                    AmadeusFlightAPI._airport_cache_with_country[(city_lower, country_lower)] = iata_code
-                    
-                    # For city-only cache, only store first occurrence
-                    # (this will be the "primary" airport)
-                    if city_lower not in AmadeusFlightAPI._airport_cache:
-                        AmadeusFlightAPI._airport_cache[city_lower] = iata_code
-                        city_counts[city_lower] = 1
-                    else:
-                        city_counts[city_lower] += 1
-            
-            print(f"Loaded {len(AmadeusFlightAPI._airport_cache_with_country)} airport codes into cache")
-            
-            # Warn about ambiguous cities
-            ambiguous = [city for city, count in city_counts.items() if count > 1]
-            if ambiguous:
-                print(f"Note: {len(ambiguous)} cities have multiple airports (use country parameter for disambiguation)")
-        
-        except Exception as e:
-            print(f"Error loading airport codes: {e}")
-            
     
     def _parse_flight_offer(self, flight_offer):
         '''
@@ -336,41 +265,38 @@ class AmadeusFlightAPI:
         # Return the 10 cheapest flights
         return all_options[:10]
     
-    def get_airport_code(self, city_name, country_name):
+    def get_airport_code(self, city_name):
         """
-        Search for airport code by city and country name. Backup hard-coded three-letter airport codes if broader data is not available.
+        Search for airport code by city name. Backup hard-coded three-letter airport codes if broader data is not available.
         
         **Parameters**
 
             city_name: *str*
                 City name (e.g. "Paris", "New York")
-
-            country_name: *str*
-                Country name (e.g. "France", "United States of America")
         
         **Returns**
             
             Three letter primary airport code (IATA) or None
         """
-        #
-        csv_path = Path("data/airports.csv")
-
-        # If available, use large CSV of airport codes in "data" folder to get airport code
-        if csv_path.exists():
-        try:
-            with csv_path.open('r', encoding='utf-8') as f:
-                reader = csv.DictReader(f)
-                city_lower = city_name.lower().strip()
-                
-                for row in reader:
-                    
-                    csv_city = row.get('City', '').lower().strip()
-                    
-                    if csv_city == city_lower:
-                        return row.get('IATA', '').upper()
+        # #
+        # csv_path = Path("data/airports.csv")
         
-        except Exception as e:
-            print(f"Warning: Could not read airport codes CSV: {e}")
+        # # If available, use large CSV of airport codes in "data" folder to get airport code   <-- Nevermind there are some issues with this due to problems with the csv file and I can't find a working one
+        # if csv_path.exists():
+        # try:
+        #     with csv_path.open('r', encoding='utf-8') as f:
+        #         reader = csv.DictReader(f)
+        #         city_lower = city_name.lower().strip()
+                
+        #         for row in reader:
+                    
+        #             csv_city = row.get('City', '').lower().strip()
+                    
+        #             if csv_city == city_lower:
+        #                 return row.get('IATA', '').upper()
+        
+        # except Exception as e:
+        #     print(f"Warning: Could not read airport codes CSV: {e}")
         
         # Hard code starter dictionary with common city to airport mappings as a backup
         city_to_airport = {
