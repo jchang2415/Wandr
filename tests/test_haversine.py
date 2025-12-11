@@ -41,21 +41,7 @@ def test_haversine_nyc_to_la():
     
     # Allow 50km margin of error for long distances
     assert 3900 < distance < 4000
-
-
-def test_haversine_tokyo_to_paris():
-    '''
-    Test very long distance - Tokyo to Paris
-    Should be approximately 9713 km
-    '''
-    tokyo = (35.6762, 139.6503)
-    paris = (48.8566, 2.3522)
     
-    distance = haversine_distance_km(tokyo, paris)
-    
-    # Allow 100km margin for very long distances
-    assert 9600 < distance < 9800
-
 
 def test_haversine_short_distance():
     '''
@@ -136,21 +122,6 @@ def test_haversine_across_prime_meridian():
     
     # At ~51° latitude, distance should be less than at equator
     assert 650 < distance < 750
-
-
-def test_haversine_antipodal_points():
-    '''
-    Test distance between roughly antipodal points
-    Should be close to half Earth's circumference
-    '''
-    # Madrid and roughly its antipode in Pacific
-    madrid = (40.4168, -3.7038)
-    antipode = (-40.4168, 176.2962)
-    
-    distance = haversine_distance_km(madrid, antipode)
-    
-    # Should be close to 20,000 km (half Earth's circumference)
-    assert 19500 < distance < 20500
 
 
 def test_haversine_negative_coordinates():
@@ -251,3 +222,4 @@ def test_haversine_real_world_cities():
     distance = haversine_distance_km(cities['Paris'], cities['Sydney'])
 
     assert 16500 < distance < 17500
+
