@@ -239,15 +239,13 @@ def test_score_variety_penalty_repeated_category(museum_activity, balanced_prefs
 
 def test_score_variety_second_activity_neutral(museum_activity, balanced_prefs):
     '''Test that second activity of same category is neutral'''
-    already_scheduled = [
-        Activity("Museum 1", "museum", 2.0, 20.0, None, "M1"),
-    ]
+    already_scheduled = [Activity("Museum 1", "museum", 2.0, 20.0, None, "M1")]
+
+    score_second = score_activity(museum_activity, balanced_prefs, already_scheduled)
+    score_first = score_activity(museum_activity, balanced_prefs, [])
     
-    score = score_activity(museum_activity, balanced_prefs, already_scheduled)
-    
-    # Should be neutral (no bonus, no penalty)
-    # Just base interest match (40)
-    assert 35 <= score <= 45
+    # first should get +10 category bonus, second should get +0 (neutral)
+    assert score_second == score_first - 10
 
 
 def test_score_variety_third_activity_penalty(museum_activity, balanced_prefs):
@@ -256,11 +254,12 @@ def test_score_variety_third_activity_penalty(museum_activity, balanced_prefs):
         Activity("Museum 1", "museum", 2.0, 20.0, None, "M1"),
         Activity("Museum 2", "museum", 2.0, 20.0, None, "M2"),
     ]
-    
+
+    score_first = score_activity(museum_activity, balanced_prefs, [])
     score = score_activity(museum_activity, balanced_prefs, already_scheduled)
     
-    # Should have -10 penalty for third
-    assert score < 35
+    # Should have -10 penalty for third activity of the same category
+    assert score_third == score_first - 10
 
 
 # ============================================================================
@@ -627,5 +626,6 @@ def test_score_ranges_reasonable():
         score = score_activity(activity, prefs)
         # Scores shouldn't be extremely large (> 1000) or small (< -1000)
         assert -1000 < score < 1000
+
 
 
