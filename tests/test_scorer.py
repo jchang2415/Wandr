@@ -166,7 +166,7 @@ def test_score_cheap_activity_with_cost_priority(cost_priority_prefs):
     assert score > 30  # Interest match + cheap bonus
 
 
-def test_score_free_activity_without_cost_priority(free_activity, balanced_prefs):
+def test_score_free_activity_without_cost_priority(free_activity, balanced_prefs, cost_priority_prefs):
     '''Test free activity when not prioritizing cost'''
     score = score_activity(free_activity, balanced_prefs)
     
@@ -174,7 +174,7 @@ def test_score_free_activity_without_cost_priority(free_activity, balanced_prefs
     assert score >= 0
 
 
-def test_score_expensive_activity_without_cost_priority(expensive_activity, balanced_prefs):
+def test_score_expensive_activity_without_cost_priority(expensive_activity, balanced_prefs, cost_priority_prefs):
     '''Test expensive activity when not prioritizing cost'''
     score_with_priority = score_activity(expensive_activity, cost_priority_prefs)
     score_without_priority = score_activity(expensive_activity, balanced_prefs)
@@ -627,4 +627,5 @@ def test_score_ranges_reasonable():
         score = score_activity(activity, prefs)
         # Scores shouldn't be extremely large (> 1000) or small (< -1000)
         assert -1000 < score < 1000
+
 
