@@ -25,7 +25,7 @@ You must use the command line interface for the first step. When prompted, selec
 
 To use Wandr with APIs, first obtain API keys from Geoapify (https://myprojects.geoapify.com/) and Amadeus (https://developers.amadeus.com/register). Then, change the .env file in your folder to contain your API keys by replacing the relevant "your_api_key_here" instances. Finally, run the program like normal.     
 
-See *sample_output.txt* file in data/ for an example of output file from Wandr.
+See *sample_output.txt* file in *data/* for an example of output file from Wandr.
 <img width="808" height="731" alt="image" src="https://github.com/user-attachments/assets/0e0ecfc6-5a03-4a69-84d5-d4825dd981cf" />
 
 
