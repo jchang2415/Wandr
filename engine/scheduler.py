@@ -9,7 +9,7 @@ from engine.scorer import score_activity
 from utils.haversine import haversine_distance_km
 
 def create_itinerary(trip, activities, prefs, locked_activities = None):
-    """
+    '''
     Enhanced scheduler that:
     - Scores activities based on preferences
     - Groups activities by geographic proximity
@@ -36,7 +36,7 @@ def create_itinerary(trip, activities, prefs, locked_activities = None):
         itinerary: *list[DayPlan]*
             List of DayPlan objects (one for each day) that contains the final itinerary generated for the trip.
 
-    """
+    '''
     # Initialize list of locked_activities based on passed argument; otherwise initialize as empty list
     locked_activities = locked_activities or []
     
@@ -220,6 +220,7 @@ def estimate_travel_time(activity1, activity2, speed_kmh = 5.0):
     
     # Add 15 min buffer for navigation/waiting & return travel_time value
     return travel_time + 0.25  
+
 
 
 
