@@ -72,7 +72,7 @@ def load_activities_from_csv(path: str | Path) -> List[Activity]:
 
             # Use "safe" method in case location or description information is missing
             location = _safe_coord(row.get("lat"), row.get("lon"))
-            description = row.get("description", "").strip()
+            description = (row.get("description") or "").strip()
 
             # Skip rows without a name
             if not name:
@@ -95,3 +95,4 @@ def load_activities_from_csv(path: str | Path) -> List[Activity]:
     # Return the parsed list of all activities in the input file
 
     return activities
+
