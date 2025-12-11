@@ -1,4 +1,7 @@
 # Itinerary Builder with Geographic Clustering + Distance Calculations
+'''
+Core scheduler that takes in preferences and activity information and assembles them into an itinerary based on calculated scores and fit.
+'''
 
 from datetime import timedelta
 from models.activity import Activity
@@ -220,6 +223,7 @@ def estimate_travel_time(activity1, activity2, speed_kmh = 5.0):
     
     # Add 15 min buffer for navigation/waiting & return travel_time value
     return travel_time + 0.25  
+
 
 
 
