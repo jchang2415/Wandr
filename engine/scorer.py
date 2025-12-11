@@ -125,11 +125,11 @@ def score_activity(activity, prefs, already_scheduled = None):
     
     # Penalize if the activity would be the third of the same type
     elif count == 2:
-        score -= 10  
+        score -= 15  
     
     # Give a strong penalty for 4+ activities of the same type
     else:
-        score -= 20 
+        score -= 30 
     
     # 5. DURATION FLEXIBILITY (0-8 points)
     # Boost shorter activities as they are more flexible for scheduling
