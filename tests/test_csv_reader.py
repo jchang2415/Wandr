@@ -10,7 +10,7 @@ def create_test_csv(content: str) -> Path:
     '''
     Helper function to create a temporary CSV file for testing
     '''
-    temp_file = tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.csv')
+    temp_file = tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.csv', encoding='utf-8')
     temp_file.write(content)
     temp_file.close()
     return Path(temp_file.name)
@@ -314,3 +314,4 @@ River Walk,nature,1,0,41.890,-87.622,"Scenic walk along the river" """
     finally:
 
         csv_path.unlink()
+
